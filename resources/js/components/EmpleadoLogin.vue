@@ -36,23 +36,25 @@ export default {
     },
     methods: {
         loginEmpleado() {
-            this.errors = []; // Limpiar errores previos
+    this.errors = []; // Limpiar errores previos
 
-            axios.post('/empleado/login', {
-                correoElectronico: this.correoElectronico,
-                password: this.password,
-            })
-            .then(response => {
-                window.location.href = '/productos'; // Redirigir a productos si el login es exitoso
-            })
-            .catch(error => {
-                if (error.response && error.response.data.errors) {
-                    this.errors = Object.values(error.response.data.errors).flat();
-                } else {
-                    this.errors.push('Las credenciales no coinciden con nuestros registros.');
-                }
-            });
+    axios.post('/empleado/login', {
+        correoElectronico: this.correoElectronico,
+        password: this.password,
+    })
+    .then(response => {
+        if (response.data.redirect) {
+            window.location.href = response.data.redirect; // Redirige a productos si el login es exitoso
         }
+    })
+    .catch(error => {
+        if (error.response && error.response.data.errors) {
+            this.errors = Object.values(error.response.data.errors).flat();
+        } else {
+            this.errors.push('Las credenciales no coinciden con nuestros registros.');
+        }
+    });
+}
     }
 };
 </script>

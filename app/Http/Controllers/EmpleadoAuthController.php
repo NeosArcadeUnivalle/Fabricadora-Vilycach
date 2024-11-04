@@ -15,7 +15,6 @@ class EmpleadoAuthController extends Controller
         return view('auth.empleado-login');
     }
 
-    // Manejar el inicio de sesión
     public function login(Request $request)
     {
         // Validar los campos del formulario
@@ -23,24 +22,21 @@ class EmpleadoAuthController extends Controller
             'correoElectronico' => 'required|email',
             'password' => 'required|min:6',
         ]);
-
-        // Buscar el empleado por su correo electrónico
-        $empleado = Empleado::where('correoElectronico', $request->correoElectronico)->first();
-
-        // Verificar si el empleado existe y la contraseña es correcta
-        if ($empleado && Hash::check($request->password, $empleado->password)) {
-            // Iniciar sesión
-            Auth::login($empleado);
-
-            // Redirigir a la página deseada después del inicio de sesión
-            return redirect()->intended('productos');
+    
+        $credentials = [
+            'correoElectronico' => $request->correoElectronico,
+            'password' => $request->password,
+        ];
+    
+        if (Auth::guard('web')->attempt($credentials)) {
+            return response()->json(['redirect' => url('/productos')]);
         }
-
-        // Si las credenciales son incorrectas
-        return back()->withErrors([
-            'correoElectronico' => 'Las credenciales no coinciden con nuestros registros.',
-        ]);
+    
+        return response()->json(['errors' => [
+            'correoElectronico' => ['Las credenciales no coinciden con nuestros registros.']
+        ]], 422);
     }
+    
 
     // Cerrar sesión
     public function logout()
