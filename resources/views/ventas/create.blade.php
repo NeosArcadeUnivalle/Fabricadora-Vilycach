@@ -13,11 +13,11 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="nombre" class="form-label">Nombres:</label>
-                        <input type="text" name="nombre" value="{{ old('nombre') }}" class="form-control" required>
+                        <input type="text" name="nombre" id="nombre" value="{{ old('nombre') }}" class="form-control" required maxlength="100" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo letras y hasta 100 caracteres">
                     </div>
                     <div class="col-md-6">
                         <label for="apellido" class="form-label">Apellidos:</label>
-                        <input type="text" name="apellido" value="{{ old('apellido') }}" class="form-control" required>
+                        <input type="text" name="apellido" id="apellido" value="{{ old('apellido') }}" class="form-control" required maxlength="100" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo letras y hasta 100 caracteres">
                     </div>
                 </div>
                 
@@ -31,14 +31,14 @@
                     </div>
                     <div class="col-md-6" id="empresaField" style="display:none;">
                         <label for="empresa" class="form-label">Empresa:</label>
-                        <input type="text" name="empresa" value="{{ old('empresa') }}" class="form-control">
+                        <input type="text" name="empresa" id="empresa" value="{{ old('empresa') }}" class="form-control" maxlength="100" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo letras y hasta 100 caracteres">
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="telefono" class="form-label">Teléfono:</label>
-                        <input type="number" name="telefono" value="{{ old('telefono') }}" class="form-control" required>
+                        <input type="number" name="telefono" id="telefono" value="{{ old('telefono') }}" class="form-control" maxlength="8" pattern="\d{8}" title="Debe ser un número de 8 dígitos" required oninput="validateLength(this, 8)">
                     </div>
                 </div>
             </div>
@@ -61,7 +61,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="cantidad" class="form-label">Cantidad:</label>
-                        <input type="number" name="cantidad" id="cantidad" value="1" min="1" class="form-control" onchange="updateTotal()" required>
+                        <input type="number" name="cantidad" id="cantidad" value="1" min="1" max="999999" class="form-control" oninput="updateTotal(); validateLength(this, 6)" required>
                     </div>
                 </div>
             </div>
@@ -74,15 +74,15 @@
                 <div class="row mb-3">
                     <div class="col-md-4">
                         <label for="nombreLugarVenta" class="form-label">Lugar de Venta:</label>
-                        <input type="text" name="nombreLugarVenta" value="{{ old('nombreLugarVenta') }}" class="form-control" required>
+                        <input type="text" name="nombreLugarVenta" id="nombreLugarVenta" value="{{ old('nombreLugarVenta') }}" class="form-control" maxlength="100" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo letras y hasta 100 caracteres" required>
                     </div>
                     <div class="col-md-4">
                         <label for="direccion" class="form-label">Dirección:</label>
-                        <input type="text" name="direccion" value="{{ old('direccion') }}" class="form-control" required>
+                        <input type="text" name="direccion" value="{{ old('direccion') }}" class="form-control" maxlength="255" required>
                     </div>
                     <div class="col-md-4">
                         <label for="ciudad" class="form-label">Ciudad:</label>
-                        <input type="text" name="ciudad" value="{{ old('ciudad') }}" class="form-control" required>
+                        <input type="text" name="ciudad" id="ciudad" value="{{ old('ciudad') }}" class="form-control" maxlength="100" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo letras y hasta 100 caracteres" required>
                     </div>
                 </div>
             </div>
@@ -119,12 +119,7 @@
     function toggleEmpresaInput() {
         const empresaField = document.getElementById('empresaField');
         const tieneEmpresa = document.getElementById('tieneEmpresa').value;
-        if (tieneEmpresa === 'si') {
-            empresaField.style.display = 'block';
-        } else {
-            empresaField.style.display = 'none';
-            document.querySelector('input[name="empresa"]').value = '';
-        }
+        empresaField.style.display = tieneEmpresa === 'si' ? 'block' : 'none';
     }
 
     function updateTotal() {
@@ -139,7 +134,34 @@
         document.getElementById('total').innerText = total.toFixed(2);
     }
 
-    // Actualizar total en el inicio
+    // Validaciones en tiempo real para nombres, apellidos, empresa, lugar de venta y ciudad
+    document.getElementById('nombre').addEventListener('input', (event) => {
+        event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').substring(0, 100);
+    });
+
+    document.getElementById('apellido').addEventListener('input', (event) => {
+        event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').substring(0, 100);
+    });
+
+    document.getElementById('empresa').addEventListener('input', (event) => {
+        event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').substring(0, 100);
+    });
+
+    document.getElementById('nombreLugarVenta').addEventListener('input', (event) => {
+        event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').substring(0, 100);
+    });
+
+    document.getElementById('ciudad').addEventListener('input', (event) => {
+        event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').substring(0, 100);
+    });
+
+    // Validación de longitud exacta para campos numéricos
+    function validateLength(element, maxLength) {
+        if (element.value.length > maxLength) {
+            element.value = element.value.slice(0, maxLength);
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', updateTotal);
 </script>
 @endsection

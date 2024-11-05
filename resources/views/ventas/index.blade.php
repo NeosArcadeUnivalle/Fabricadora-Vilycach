@@ -190,4 +190,10 @@
         {{ $ventas->links('pagination::bootstrap-4') }}
     </div>      
 </div>
+
+@if($errors->any())
+    <script>
+        alert("{{ $errors->first() }}");
+    </script>
+@endif
 @endsection

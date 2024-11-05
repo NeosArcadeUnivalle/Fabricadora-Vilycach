@@ -23,7 +23,7 @@
                 <div class="row mb-3">
                     <div class="col-md-8">
                         <label for="idProducto" class="form-label">Producto:</label>
-                        <select name="idProducto" id="producto" class="form-select" onchange="updatePrecio()">
+                        <select name="idProducto" id="producto" class="form-select" required onchange="updatePrecio()">
                             @foreach ($productos as $producto)
                                 <option value="{{ $producto->idProducto }}" data-precio="{{ $producto->precio }}" data-tipo="{{ $producto->tipoLadrillo->tipoLadrillo }}"
                                     {{ $venta->idProducto == $producto->idProducto ? 'selected' : '' }}>
@@ -34,7 +34,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="cantidad" class="form-label">Cantidad:</label>
-                        <input type="number" name="cantidad" id="cantidad" value="{{ $venta->total }}" min="1" class="form-control" oninput="calcularTotal()">
+                        <input type="number" name="cantidad" id="cantidad" value="{{ $venta->total }}" min="1" max="999999" class="form-control" oninput="calcularTotal()" required>
                     </div>
                 </div>
 
@@ -49,6 +49,7 @@
         </div>
     </form>
 </div>
+
 <script>
     function updatePrecio() {
         const selectedProduct = document.querySelector('#producto');
