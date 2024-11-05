@@ -21,19 +21,18 @@ class VentaController extends Controller
 
     public function store(Request $request)
     {
-        // Validamos la entrada
+        // En el método store del controlador VentaController
         $request->validate([
             'nombre' => 'required|string|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/|max:100',
             'apellido' => 'required|string|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/|max:100',
             'empresa' => 'nullable|string|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/|max:100',
-            'telefono' => 'required|string|max:20',
+            'telefono' => 'required|digits:8', // Teléfono debe tener exactamente 8 dígitos
             'producto' => 'required|integer',
-            'cantidad' => 'required|integer|min:1',
-            'nombreLugarVenta' => 'required|string|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/|max:100',
+            'cantidad' => 'required|integer|min:1|max:999999',
+            'nombreLugarVenta' => 'required|string|max:100',
             'direccion' => 'required|string|max:255',
-            'ciudad' => 'required|string|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/|max:100',
+            'ciudad' => 'required|string|max:100',
         ]);
-
         // Buscar o crear Persona
         $persona = Persona::firstOrCreate([
             'nombre' => $request->input('nombre'),
@@ -107,7 +106,6 @@ class VentaController extends Controller
         return view('ventas.index', compact('ventas'));
     }
     
-    
     public function edit($id)
     {
         // Obtener la venta específica
@@ -164,21 +162,22 @@ class VentaController extends Controller
     {
         $venta = Venta::findOrFail($id);
         
-        // Cambiar estado a 'Completado'
-        $venta->estado = 'Completado';
-    
-        // Realizar la resta de la cantidad del producto en la tabla Producto
-        if ($venta->estado == 'Completado') {
-            $producto = Producto::findOrFail($venta->idProducto);
-            $producto->cantidadDisponible -= $venta->total;  // Restar la cantidad vendida
-            $producto->save();
+        // Obtener el producto relacionado con la venta
+        $producto = Producto::findOrFail($venta->idProducto);
+        
+        // Verificar si la cantidad de productos en stock es suficiente para completar la venta
+        if ($producto->cantidadDisponible < $venta->total) {
+            return redirect()->route('ventas.index')->withErrors(['error' => 'No hay suficiente stock para completar esta venta.']);
         }
-    
+
+        // Cambiar el estado a 'Completado' y restar la cantidad en el stock del producto
+        $venta->estado = 'Completado';
+        $producto->cantidadDisponible -= $venta->total;
+        $producto->save();
         $venta->save();
-    
+
         return redirect()->route('ventas.index')->with('success', 'Venta completada correctamente.');
     }
-    
 
     public function destroy($id)
     {
