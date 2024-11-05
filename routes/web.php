@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpleadoAuthController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\CatalogoController;
 
 // Rutas para las vistas
 Route::resource('empleados', EmpleadoController::class);
@@ -40,3 +41,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // Ruta de API para obtener empleados en JSON (solo para referencia)
 Route::get('/api/empleados', [EmpleadoController::class, 'getEmpleados']);
 Route::delete('/empleados/{id}', [EmpleadoController::class, 'destroy'])->name('empleados.destroy');
+
+Route::get('/catalogo', [CatalogoController::class, 'index']);

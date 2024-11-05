@@ -19,6 +19,8 @@
 
                 <button type="submit">Iniciar Sesión</button>
             </form>
+            <!-- Botón para regresar al home -->
+            <button @click="goToHome" class="back-btn">Regresar</button>
         </div>
     </div>
 </template>
@@ -36,25 +38,28 @@ export default {
     },
     methods: {
         loginEmpleado() {
-    this.errors = []; // Limpiar errores previos
+            this.errors = []; // Limpiar errores previos
 
-    axios.post('/empleado/login', {
-        correoElectronico: this.correoElectronico,
-        password: this.password,
-    })
-    .then(response => {
-        if (response.data.redirect) {
-            window.location.href = response.data.redirect; // Redirige a productos si el login es exitoso
+            axios.post('/empleado/login', {
+                correoElectronico: this.correoElectronico,
+                password: this.password,
+            })
+            .then(response => {
+                if (response.data.redirect) {
+                    window.location.href = response.data.redirect; // Redirige a productos si el login es exitoso
+                }
+            })
+            .catch(error => {
+                if (error.response && error.response.data.errors) {
+                    this.errors = Object.values(error.response.data.errors).flat();
+                } else {
+                    this.errors.push('Las credenciales no coinciden con nuestros registros.');
+                }
+            });
+        },
+        goToHome() {
+            window.location.href = '/'; // Redirige al home
         }
-    })
-    .catch(error => {
-        if (error.response && error.response.data.errors) {
-            this.errors = Object.values(error.response.data.errors).flat();
-        } else {
-            this.errors.push('Las credenciales no coinciden con nuestros registros.');
-        }
-    });
-}
     }
 };
 </script>
@@ -136,5 +141,23 @@ form button {
 
 form button:hover {
     background-color: #8b0000;
+}
+
+/* Estilo para el botón de regresar */
+.back-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #d3d3d3;
+    color: #333;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+    background-color: #a9a9a9;
 }
 </style>
