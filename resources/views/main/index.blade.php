@@ -37,7 +37,7 @@
         .nav-link {
             color: #fff !important;
             font-weight: 600;
-            font-size: 0.9em; /* Reduce font size */
+            font-size: 0.9em;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             transition: color 0.3s;
@@ -53,7 +53,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background-image: url('{{ asset("img/carrusel4.jpg") }}');
+            background-image: url('img/carrusel4.jpg');
             background-size: cover;
             background-position: center;
             padding: 100px 0;
@@ -148,25 +148,30 @@
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
-        <a class="navbar-brand" href="#">
-            <img src="{{ asset('img/logo-fotor-2024092416012.png') }}" alt="Logo">
-            Vilycach
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/ventas/create">Comprar</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/catalogo">Catálogo</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/empleado/login">Login</a>
-                </li>
-            </ul>
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center">
+                <img src="img/logo-fotor-2024092416012.png" alt="Logo">
+                <span>Vilycach</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ventas/create">Comprar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/catalogo">Catálogo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/empleado/login">Login</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
@@ -265,7 +270,7 @@
     <footer class="text-center">
         <div class="container py-4">
             <div class="footer-logo">Grupo Industrial Vilycach</div>
-            <p>&copy; 2023 Vilycach. Todos los derechos reservados.</p>
+            <p>&copy; 2024 Vilycach. Todos los derechos reservados.</p>
             <div class="social-icons">
                 <a href="https://www.facebook.com/profile.php?id=100064032765756"><i class="fa-brands fa-facebook-f"></i></a>
                 <a href="https://wa.me/+59176546965/?text=MasInformacion"><i class="fa-brands fa-whatsapp"></i></a>

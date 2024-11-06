@@ -1,14 +1,44 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1 class="mb-4">Compra y Venta</h1>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #b22222;">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center">
+            <img src="{{ asset('img/logo-fotor-2024092416012.png') }}" alt="Logo" style="width: 40px; height: 40px; margin-right: 8px;">
+            <span style="color: #ffd700; font-weight: bold; font-size: 1.5em;">Vilycach</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/" style="color: #fff; font-weight: 600; text-transform: uppercase; transition: color 0.3s;">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/ventas/create" style="color: #fff; font-weight: 600; text-transform: uppercase; transition: color 0.3s;">Comprar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/catalogo" style="color: #fff; font-weight: 600; text-transform: uppercase; transition: color 0.3s;">Catálogo</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/empleado/login" style="color: #fff; font-weight: 600; text-transform: uppercase; transition: color 0.3s;">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Form Section -->
+<div class="container my-5" style="background-color: #f4f6f8; padding: 20px; border-radius: 8px;">
+    <h1 class="mb-4 text-center" style="color: #b22222; font-weight: bold;">Comprar</h1>
     <form method="POST" action="{{ route('ventas.store') }}">
         @csrf
-
         <!-- Datos del Cliente -->
-        <div class="card mb-4">
-            <div class="card-header">Datos del Cliente</div>
+        <div class="card mb-4 shadow-sm border-0" style="background-color: #ffffff;">
+            <div class="card-header" style="background-color: #b22222; color: #ffd700; font-weight: bold;">Datos del Cliente</div>
             <div class="card-body">
                 <div class="row mb-3">
                     <div class="col-md-6">
@@ -45,8 +75,8 @@
         </div>
 
         <!-- Producto -->
-        <div class="card mb-4">
-            <div class="card-header">Producto</div>
+        <div class="card mb-4 shadow-sm border-0" style="background-color: #ffffff;">
+            <div class="card-header" style="background-color: #b22222; color: #ffd700; font-weight: bold;">Producto</div>
             <div class="card-body">
                 <div class="row mb-3">
                     <div class="col-md-8">
@@ -68,8 +98,8 @@
         </div>
 
         <!-- Lugar de Venta -->
-        <div class="card mb-4">
-            <div class="card-header">Lugar de Venta</div>
+        <div class="card mb-4 shadow-sm border-0" style="background-color: #ffffff;">
+            <div class="card-header" style="background-color: #b22222; color: #ffd700; font-weight: bold;">Lugar de Venta</div>
             <div class="card-body">
                 <div class="row mb-3">
                     <div class="col-md-4">
@@ -89,33 +119,61 @@
         </div>
 
         <!-- Total -->
-        <div class="card mb-4">
-            <div class="card-header">Total</div>
+        <div class="card mb-4 shadow-sm border-0" style="background-color: #ffffff;">
+            <div class="card-header" style="background-color: #b22222; color: #ffd700; font-weight: bold;">Total</div>
             <div class="card-body">
-                <p class="fs-4">Total: <span id="total">0.00</span> Bs</p>
+                <p class="fs-4 text-center" style="color: #333;">Total: <span id="total" style="color: #b22222; font-weight: bold;">0.00</span> Bs</p>
             </div>
         </div>
 
-        <div class="d-flex justify-content-start mt-3">
-            <button type="submit" class="btn btn-primary me-3">Registrar Venta</button>
+        <!-- Submit Button -->
+        <div class="d-flex justify-content-center mt-3">
+            <button type="submit" class="btn me-3" style="background-color: #b22222; color: #ffd700; font-weight: bold;">Solicitar Compra</button>
             <a href="/" class="btn btn-secondary">Regresar</a>
         </div>
     </form>
 </div>
 
-<!-- Si hay errores de validación, mostrar una ventana emergente -->
-@if($errors->any())
-    <script>
-        let errorMessage = '';
-        @foreach ($errors->all() as $error)
-            errorMessage += '{{ $error }}\n';
-        @endforeach
-        alert(errorMessage);
-    </script>
-@endif
+<!-- Footer -->
+<footer class="text-center" style="background-color: #333; color: #fff; padding: 40px 0;">
+    <div class="container">
+        <div class="footer-logo" style="color: #ffd700; font-size: 1.5em; font-weight: bold;">Grupo Industrial Vilycach</div>
+        <p>&copy; 2024 Vilycach. Todos los derechos reservados.</p>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/profile.php?id=100064032765756" style="color: #ffd700; margin: 0 10px; font-size: 1.2em;"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://wa.me/+59176546965/?text=MasInformacion" style="color: #ffd700; margin: 0 10px; font-size: 1.2em;"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://www.instagram.com/univalle_bolivia/" style="color: #ffd700; margin: 0 10px; font-size: 1.2em;"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+    </div>
+</footer>
 
+<!-- Scroll-to-top Button -->
+<a href="#" class="scroll-to-top" style="display: none; position: fixed; bottom: 25px; right: 25px; color: #ffd700; font-size: 1.5em; z-index: 1000;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+
+<!-- Scripts -->
 <script>
-    // Mostrar u ocultar el campo de empresa
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('mouseenter', () => {
+            link.style.color = '#ffd700';
+        });
+        link.addEventListener('mouseleave', () => {
+            link.style.color = link.innerText === 'Comprar' ? '#ffd700' : '#fff';
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const scrollBtn = document.querySelector('.scroll-to-top');
+        window.addEventListener('scroll', function () {
+            scrollBtn.style.display = window.scrollY > 100 ? 'block' : 'none';
+        });
+        scrollBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+
     function toggleEmpresaInput() {
         const empresaField = document.getElementById('empresaField');
         const tieneEmpresa = document.getElementById('tieneEmpresa').value;
@@ -134,7 +192,6 @@
         document.getElementById('total').innerText = total.toFixed(2);
     }
 
-    // Validaciones en tiempo real para nombres, apellidos, empresa, lugar de venta y ciudad
     document.getElementById('nombre').addEventListener('input', (event) => {
         event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').substring(0, 100);
     });
@@ -155,7 +212,6 @@
         event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').substring(0, 100);
     });
 
-    // Validación de longitud exacta para campos numéricos
     function validateLength(element, maxLength) {
         if (element.value.length > maxLength) {
             element.value = element.value.slice(0, maxLength);
@@ -164,4 +220,5 @@
 
     document.addEventListener('DOMContentLoaded', updateTotal);
 </script>
+
 @endsection
