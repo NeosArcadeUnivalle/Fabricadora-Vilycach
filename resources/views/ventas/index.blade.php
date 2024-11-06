@@ -136,10 +136,6 @@
         </form>
     </div>
 
-    <div class="mb-3">
-        <a href="{{ route('ventas.create') }}" class="btn btn-primary">Crear Nueva Venta</a>
-    </div>
-
     <table class="table">
         <thead>
             <tr>
