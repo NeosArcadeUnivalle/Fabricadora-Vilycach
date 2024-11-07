@@ -95,6 +95,38 @@
             });
 
             cantidadModificar.addEventListener('input', updateCantidadFinal);
+                    // Validar campo "Nombre del Proveedor"
+        document.querySelector('input[name="nombreProveedor"]').addEventListener('input', function (event) {
+            event.target.value = event.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '').substring(0, 100);
+        });
+
+        // Validar campo "Teléfono" - solo números
+        document.querySelector('input[name="telefonoProveedor"]').addEventListener('input', function (event) {
+            event.target.value = event.target.value.replace(/[^0-9]/g, '').substring(0, 20);
+        });
+
+        // Validar campo "Nombre de la Materia Prima"
+        document.querySelector('input[name="nombreMateriaPrima"]').addEventListener('input', function (event) {
+            event.target.value = event.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '').substring(0, 100);
+        });
+
+        // Validar campo "Cantidad a Modificar" - solo números y punto decimal
+        document.querySelector('input[name="cantidadModificar"]').addEventListener('input', function (event) {
+            event.target.value = event.target.value.replace(/[^0-9.]/g, '');
+        });
+
+        // Validar campo "Fecha de Última Compra" para no permitir futuras
+        const fechaUltimaCompra = document.querySelector('input[name="fechaUltimaCompra"]');
+        const today = new Date().toISOString().split('T')[0];
+        fechaUltimaCompra.setAttribute('max', today);
+
+        fechaUltimaCompra.addEventListener('change', function (event) {
+            const selectedDate = new Date(event.target.value);
+            if (selectedDate > new Date(today)) {
+                alert('La fecha de última compra no puede ser futura.');
+                event.target.value = today;
+            }
+        });
         });
     </script>
 @endsection

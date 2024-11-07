@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo de Productos</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4/dist/fancybox.css" />
     <style>
-        /* Estilos generales */
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: Arial, sans-serif;
             background-color: #f4f4f9;
             color: #333;
             margin: 0;
@@ -18,33 +17,32 @@
             flex-direction: column;
             align-items: center;
         }
-
+ 
         h1 {
             text-align: center;
             color: #2c3e50;
             width: 100%;
             margin: 20px 0;
         }
-
-        /* Navbar */
+ 
         .navbar {
             background-color: #b22222;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             width: 100%;
         }
-
+ 
         .navbar-brand {
             font-weight: bold;
             color: #ffd700 !important;
             font-size: 1.8em;
         }
-
+ 
         .navbar-brand img {
             width: 50px;
             height: 50px;
             margin-right: 10px;
         }
-
+ 
         .nav-link {
             color: #fff !important;
             font-weight: 600;
@@ -53,116 +51,122 @@
             letter-spacing: 0.05em;
             transition: color 0.3s;
         }
-
+ 
         .nav-link:hover {
             color: #ffd700 !important;
         }
-
-        /* Contenedor del catálogo */
+ 
         .catalogo-container {
             width: 90%;
-            max-width: 1400px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
             gap: 20px;
             justify-content: center;
             padding-bottom: 40px;
         }
-
-        /* Tarjeta de producto */
+ 
         .catalogo-item {
+            display: flex;
+            align-items: center;
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            text-align: center;
             transition: transform 0.2s;
+            border-left: 5px solid #b22222;
+            flex-wrap: wrap;
         }
-
+ 
         .catalogo-item:hover {
-            transform: translateY(-5px);
+            transform: scale(1.02);
         }
-
+ 
         .catalogo-item img {
-            max-width: 100%;
+            max-width: 200px;
+            width: 100%;
             height: auto;
             border-radius: 8px;
-            max-height: 200px;
+            margin-right: 20px;
+            cursor: pointer;
         }
-
+ 
+        .catalogo-item .details {
+            flex-grow: 1;
+            max-width: 100%;
+        }
+ 
         .catalogo-item h2 {
-            font-size: 18px;
-            margin: 10px 0;
-            color: #34495e;
+            font-size: 24px;
+            color: #b22222;
+            margin-bottom: 5px;
         }
-
+ 
+        .section-title {
+            font-weight: bold;
+            color: #444;
+            margin-top: 15px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+ 
         .precio {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
             color: #e74c3c;
-            margin-top: 10px;
+            margin: 10px 0;
+            text-align: right;
         }
-
-        /* Estilos del botón de detalles */
-        .details-btn {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 20px;
-            color: #fff;
-            background-color: #3498db;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 16px;
-            transition: background-color 0.3s;
-            cursor: pointer;
-        }
-
-        .details-btn:hover {
-            background-color: #2980b9;
-        }
-
-        /* Estilos del modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
+ 
+        .quantity-container {
+            display: flex;
             align-items: center;
-            z-index: 1000;
-        }
-
-        .modal-content {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            max-width: 500px;
-            width: 100%;
-            text-align: left;
-            position: relative;
-        }
-
-        .modal-content img {
-            max-width: 100%;
-            border-radius: 8px;
-        }
-
-        .modal-content h2 {
             margin-top: 10px;
+            flex-wrap: wrap;
         }
-
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 20px;
+ 
+        .quantity-container input {
+            width: 50px;
+            text-align: center;
+            font-size: 16px;
+            border: 2px solid #b22222;
+            border-radius: 4px;
+            margin: 0 5px;
+        }
+ 
+        .quantity-container button {
+            background-color: #b22222;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            font-size: 16px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
-
-        /* Footer */
+ 
+        .quantity-container button:hover {
+            background-color: #a02020;
+        }
+ 
+        .add-to-cart-btn {
+            background-color: #b22222;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-left: 15px;
+            transition: background-color 0.3s;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+ 
+        .add-to-cart-btn:hover {
+            background-color: #a02020;
+        }
+ 
         footer {
             background-color: #333;
             color: #fff;
@@ -171,24 +175,24 @@
             width: 100%;
             text-align: center;
         }
-
+ 
         footer .footer-logo {
             font-weight: bold;
             color: #ffd700;
             font-size: 1.5em;
         }
-
+ 
         footer .social-icons a {
             color: #ffd700;
             margin: 0 10px;
             font-size: 1.2em;
             transition: color 0.3s;
         }
-
+ 
         footer .social-icons a:hover {
             color: #b22222;
         }
-
+ 
         .scroll-to-top {
             display: none;
             position: fixed;
@@ -198,10 +202,34 @@
             font-size: 1.5em;
             z-index: 1000;
         }
+ 
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .catalogo-item {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 15px;
+            }
+ 
+            .catalogo-item img {
+                margin-right: 0;
+                margin-bottom: 15px;
+                max-width: 100%;
+            }
+ 
+            .quantity-container, .add-to-cart-btn {
+                width: 100%;
+                justify-content: space-between;
+            }
+ 
+            .precio {
+                text-align: left;
+            }
+        }
     </style>
 </head>
 <body>
-
+ 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
@@ -209,7 +237,7 @@
                 <img src="{{ asset('img/logo-fotor-2024092416012.png') }}" alt="Logo">
                 <span>Vilycach</span>
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -230,79 +258,140 @@
             </div>
         </div>
     </nav>
-
+ 
     <h1>Catálogo de Productos</h1>
     <div class="catalogo-container">
-        <!-- Producto 1 -->
-        <div class="catalogo-item">
+     <!-- Producto 1 -->
+     <div class="catalogo-item">
+        <a href="{{ asset('img/Rayado6.jpg') }}" data-fancybox="gallery" data-caption="Ladrillo Rayado">
             <img src="{{ asset('img/Rayado6.jpg') }}" alt="Ladrillo Rayado">
+        </a>
+        <div class="details">
             <h2>Ladrillo Rayado</h2>
-            <p>Descripción breve del ladrillo rayado.</p>
-            <button class="details-btn" onclick="openModal('Rayado')">Más Detalles</button>
+            <p class="section-title">Descripción</p>
+            <p>Cerámica rectangular de 6 huecos en la cara frontal.</p>
+            <p class="section-title">Datos Físicos</p>
+            <p>Color: Naranja</p>
+            <p>Acabado: Textura de la superficie con estrías en todas sus caras.</p>
+            <p class="section-title">Dimensiones</p>
+            <p>Alto: 15 cm, Largo: 25 cm, Ancho: 10 cm, Peso: 2,7 Kg</p>
+            <p class="section-title">Rendimiento</p>
+            <p>23 Pzas/m2</p>
+            <p class="precio">Bs. 0.90</p>
+            <div class="quantity-container">
+                <button onclick="updateQuantity(-1, 'quantityRayado')">-</button>
+                <input type="text" id="quantityRayado" value="1" min="1">
+                <button onclick="updateQuantity(1, 'quantityRayado')">+</button>
+                <button class="add-to-cart-btn">Comprar!</button>
+            </div>
         </div>
-
-        <!-- Producto 2 -->
-        <div class="catalogo-item">
+    </div>
+ 
+    <!-- Producto 2 -->
+    <div class="catalogo-item">
+        <a href="{{ asset('img/Liso6.jpg') }}" data-fancybox="gallery" data-caption="Ladrillo Liso">
             <img src="{{ asset('img/Liso6.jpg') }}" alt="Ladrillo Liso">
+        </a>
+        <div class="details">
             <h2>Ladrillo Liso</h2>
-            <p>Descripción breve del ladrillo liso.</p>
-            <button class="details-btn" onclick="openModal('Liso')">Más Detalles</button>
+            <p class="section-title">Descripción</p>
+            <p>Producto de acabado liso con 2 líneas de costado, presenta 6 orificios en la parte frontal y posterior.</p>
+            <p class="section-title">Datos Físicos</p>
+            <p>Color: Terracota</p>
+            <p>Acabado: Textura de la superficie lisa en todas sus caras.</p>
+            <p class="section-title">Dimensiones</p>
+            <p>Alto: 15 cm, Largo: 25 cm, Ancho: 10 cm, Peso: 2,7 Kg</p>
+            <p class="section-title">Rendimiento</p>
+            <p>23 Pzas/m2</p>
+            <p class="precio">Bs. 1.00</p>
+            <div class="quantity-container">
+                <button onclick="updateQuantity(-1, 'quantityLiso')">-</button>
+                <input type="text" id="quantityLiso" value="1" min="1">
+                <button onclick="updateQuantity(1, 'quantityLiso')">+</button>
+                <button class="add-to-cart-btn">Comprar!</button>
+            </div>
         </div>
-
-        <!-- Producto 3 -->
-        <div class="catalogo-item">
-            <img src="{{ asset('img/Bota5.jpg') }}" alt="Ladrillo Bota Agua">
-            <h2>Ladrillo Bota Agua</h2>
-            <p>Descripción breve del ladrillo bota agua.</p>
-            <button class="details-btn" onclick="openModal('BotaAgua')">Más Detalles</button>
-        </div>
-
-        <!-- Producto 4 -->
-        <div class="catalogo-item">
+    </div>
+ 
+    <!-- Producto 3 -->
+    <div class="catalogo-item">
+        <a href="{{ asset('img/Gambote18.jpg') }}" data-fancybox="gallery" data-caption="Ladrillo Gambote">
             <img src="{{ asset('img/Gambote18.jpg') }}" alt="Ladrillo Gambote">
+        </a>
+        <div class="details">
             <h2>Ladrillo Gambote</h2>
-            <p>Descripción breve del ladrillo gambote.</p>
-            <button class="details-btn" onclick="openModal('Gambote')">Más Detalles</button>
+            <p class="section-title">Descripción</p>
+            <p>Cerámica rectangular con 18 huecos redondos en la cara superior y liso en sus caras.</p>
+            <p class="section-title">Datos Físicos</p>
+            <p>Color: Naranja</p>
+            <p>Acabado: Textura lisa en los laterales de la pieza.</p>
+            <p class="section-title">Dimensiones</p>
+            <p>Alto: 7,0 cm, Largo: 25 cm, Ancho: 12 cm, Peso: 2,35 Kg</p>
+            <p class="section-title">Rendimiento</p>
+            <p>45 Pzas/m2</p>
+            <p class="precio">Bs. 1.17</p>
+            <div class="quantity-container">
+                <button onclick="updateQuantity(-1, 'quantityGambote')">-</button>
+                <input type="text" id="quantityGambote" value="1" min="1">
+                <button onclick="updateQuantity(1, 'quantityGambote')">+</button>
+                <button class="add-to-cart-btn">Comprar!</button>
+            </div>
         </div>
     </div>
-
-    <!-- Modales individuales para cada producto -->
-    <div class="modal" id="modalRayado">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('Rayado')">&times;</span>
-            <img src="{{ asset('img/Rayado6.jpg') }}" alt="Ladrillo Rayado">
-            <h2>Ladrillo Rayado</h2>
-            <p>Peso: 2.8 kg, Alto: 15 cm, Largo: 24 cm, Ancho: 10 cm.</p>
-        </div>
-    </div>
-
-    <div class="modal" id="modalLiso">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('Liso')">&times;</span>
-            <img src="{{ asset('img/Liso6.jpg') }}" alt="Ladrillo Liso">
-            <h2>Ladrillo Liso</h2>
-            <p>Peso: 2.7 kg, Alto: 15 cm, Largo: 24 cm, Ancho: 10 cm.</p>
-        </div>
-    </div>
-
-    <div class="modal" id="modalBotaAgua">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('BotaAgua')">&times;</span>
+ 
+    <!-- Producto 4 -->
+    <div class="catalogo-item">
+        <a href="{{ asset('img/Bota5.jpg') }}" data-fancybox="gallery" data-caption="Ladrillo Bota Agua">
             <img src="{{ asset('img/Bota5.jpg') }}" alt="Ladrillo Bota Agua">
+        </a>
+        <div class="details">
             <h2>Ladrillo Bota Agua</h2>
-            <p>Peso: 3.2 kg, Alto: 9 cm, Largo: 25 cm, Ancho: 23 cm.</p>
+            <p class="section-title">Descripción</p>
+            <p>Cerámica rectangular con 5 huecos de diferentes tamaños en la cara frontal, liso en todas sus caras.</p>
+            <p class="section-title">Datos Físicos</p>
+            <p>Color: Terracota</p>
+            <p>Acabado: Textura de la superficie lisa en todas sus caras.</p>
+            <p class="section-title">Dimensiones</p>
+            <p>Alto: 9,5 cm, Largo: 24,5 cm, Ancho: 24,5 cm, Peso: 3,175 Kg</p>
+            <p class="section-title">Rendimiento</p>
+            <p>4 Pzas/m2</p>
+            <p class="precio">Bs. 2.84</p>
+            <div class="quantity-container">
+                <button onclick="updateQuantity(-1, 'quantityBota')">-</button>
+                <input type="text" id="quantityBota" value="1" min="1">
+                <button onclick="updateQuantity(1, 'quantityBota')">+</button>
+                <button class="add-to-cart-btn">Comprar!</button>
+            </div>
         </div>
     </div>
-
-    <div class="modal" id="modalGambote">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('Gambote')">&times;</span>
-            <img src="{{ asset('img/Gambote18.jpg') }}" alt="Ladrillo Gambote">
-            <h2>Ladrillo Gambote</h2>
-            <p>Peso: 2.1 kg, Alto: 12 cm, Largo: 25 cm, Ancho: 7 cm.</p>
+ 
+    <!-- Producto 5 -->
+    <div class="catalogo-item">
+        <a href="{{ asset('img/Caida.jpg') }}" data-fancybox="gallery" data-caption="Bota Agua Una Caída">
+            <img src="{{ asset('img/Caida.jpg') }}" alt="Bota Agua Una Caída">
+        </a>
+        <div class="details">
+            <h2>Bota Agua Una Caída</h2>
+            <p class="section-title">Descripción</p>
+            <p>Cerámica rectangular con 4 huecos de diferentes tamaños en la cara frontal, liso en todas sus caras.</p>
+            <p class="section-title">Datos Físicos</p>
+            <p>Color: Terracota</p>
+            <p>Acabado: Textura de la superficie lisa en todas sus caras.</p>
+            <p class="section-title">Dimensiones</p>
+            <p>Alto: 17,5 cm, Largo: 24 cm, Ancho: 9,5 cm, Peso: 2,6 Kg</p>
+            <p class="section-title">Rendimiento</p>
+            <p>4 Pzas/m2</p>
+            <p class="precio">Bs. 2.36</p>
+            <div class="quantity-container">
+                <button onclick="updateQuantity(-1, 'quantityCaida')">-</button>
+                <input type="text" id="quantityCaida" value="1" min="1">
+                <button onclick="updateQuantity(1, 'quantityCaida')">+</button>
+                <button class="add-to-cart-btn">Comprar!</button>
+            </div>
         </div>
     </div>
-
+    </div>
+ 
     <!-- Footer -->
     <footer>
         <div class="container py-4">
@@ -315,30 +404,35 @@
             </div>
         </div>
     </footer>
-
+ 
     <a href="#" class="scroll-to-top">
         <i class="fas fa-chevron-up"></i>
     </a>
-
+ 
     <script src="https://kit.fontawesome.com/3288cf83f6.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4/dist/fancybox.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function openModal(modalId) {
-            const modal = document.getElementById('modal' + modalId);
-            if (modal) {
-                modal.style.display = 'flex';
-            } else {
-                console.error('Modal no encontrado:', modalId);
+        Fancybox.bind("[data-fancybox='gallery']", {
+            Toolbar: {
+                display: ["zoom", "download", "fullscreen", "close"],
+            },
+            Image: {
+                zoom: true,
             }
+        });
+ 
+        function updateQuantity(amount, inputId) {
+            const input = document.getElementById(inputId);
+            let currentValue = parseInt(input.value);
+            if (isNaN(currentValue)) currentValue = 1;
+ 
+            let newValue = currentValue + amount;
+            if (newValue < 1) newValue = 1;
+ 
+            input.value = newValue;
         }
-
-        function closeModal(modalId) {
-            const modal = document.getElementById('modal' + modalId);
-            if (modal) {
-                modal.style.display = 'none';
-            }
-        }
-
-        // Mostrar u ocultar el botón de desplazamiento hacia arriba
+ 
         document.addEventListener('DOMContentLoaded', function () {
             const scrollBtn = document.querySelector('.scroll-to-top');
             window.addEventListener('scroll', function () {
@@ -350,6 +444,6 @@
             });
         });
     </script>
-
+ 
 </body>
 </html>

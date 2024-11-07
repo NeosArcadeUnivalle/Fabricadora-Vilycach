@@ -33,21 +33,19 @@ class MateriaPrimaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombreProveedor' => 'required|string|max:100',
-            'telefonoProveedor' => 'required|string|max:20',
+            'nombreProveedor' => 'required|string|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/|max:100',
+            'telefonoProveedor' => 'required|numeric|digits_between:7,20',
             'direccionProveedor' => 'required|string|max:255',
             'nombreMateriaPrima' => 'required|string|max:100',
             'cantidadDisponible' => 'required|numeric|min:0',
         ]);
 
-        // Crear Proveedor
         $proveedor = Proveedor::create([
             'nombreProveedor' => $request->nombreProveedor,
             'telefonoProveedor' => $request->telefonoProveedor,
             'direccionProveedor' => $request->direccionProveedor,
         ]);
 
-        // Crear Materia Prima y asignar el id del proveedor
         MateriaPrima::create([
             'nombreMateriaPrima' => $request->nombreMateriaPrima,
             'cantidadDisponible' => $request->cantidadDisponible,
@@ -67,44 +65,39 @@ class MateriaPrimaController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nombreProveedor' => 'required|string|max:100',
-            'telefonoProveedor' => 'required|string|max:20',
+            'nombreProveedor' => 'required|string|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/|max:100',
+            'telefonoProveedor' => 'required|numeric|digits_between:7,20',
             'direccionProveedor' => 'required|string|max:255',
             'nombreMateriaPrima' => 'required|string|max:100',
             'cantidadAction' => 'nullable|string',
             'cantidadModificar' => 'nullable|numeric|min:0',
-            'fechaUltimaCompra' => 'required|date',
+            'fechaUltimaCompra' => 'required|date|before_or_equal:today',
         ]);
 
         $materiaPrima = MateriaPrima::findOrFail($id);
         $proveedor = Proveedor::findOrFail($materiaPrima->idProveedor);
 
-        // Actualizar Proveedor
         $proveedor->update([
             'nombreProveedor' => $request->nombreProveedor,
             'telefonoProveedor' => $request->telefonoProveedor,
             'direccionProveedor' => $request->direccionProveedor,
         ]);
 
-        // Modificar la cantidad si es necesario
         $cantidadTotal = $materiaPrima->cantidadDisponible;
 
-        // Aumentar o reducir según la acción seleccionada
         if ($request->cantidadAction == 'aumentar' && $request->cantidadModificar > 0) {
             $cantidadTotal += $request->cantidadModificar;
         } elseif ($request->cantidadAction == 'reducir' && $request->cantidadModificar > 0) {
             $cantidadTotal -= $request->cantidadModificar;
         }
 
-        // Asegurarse de que la cantidad no sea negativa
         if ($cantidadTotal < 0) {
             return redirect()->back()->withErrors(['error' => 'La cantidad no puede ser negativa.']);
         }
 
-        // Actualizar Materia Prima
         $materiaPrima->update([
             'nombreMateriaPrima' => $request->nombreMateriaPrima,
-            'cantidadDisponible' => $cantidadTotal, // Guardamos la nueva cantidad
+            'cantidadDisponible' => $cantidadTotal,
             'fechaUltimaCompra' => $request->fechaUltimaCompra,
         ]);
 

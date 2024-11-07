@@ -37,13 +37,19 @@ class ProduccionController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'fecha' => 'required|date|before_or_equal:today',
+            'cantidadProducida' => 'required|numeric|min:1',
+            'idProducto' => 'required|exists:productos,idProducto',
+            'idEmpleadoResponsable' => 'required|exists:empleados,idEmpleado',
+        ]);
+
         $produccion = new Produccion();
         $produccion->fecha = $request->fecha;
         $produccion->cantidadProducida = $request->cantidadProducida;
         $produccion->idProducto = $request->idProducto;
         $produccion->idEmpleadoResponsable = $request->idEmpleadoResponsable;
 
-        // Sumar la cantidad al producto
         $producto = Producto::find($request->idProducto);
         $producto->cantidadDisponible += $request->cantidadProducida;
         $producto->save();
@@ -63,19 +69,20 @@ class ProduccionController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'fecha' => 'required|date|before_or_equal:today',
+            'cantidadProducida' => 'required|numeric|min:1',
+            'idEmpleadoResponsable' => 'required|exists:empleados,idEmpleado',
+        ]);
+
         $produccion = Produccion::findOrFail($id);
-        
-        // Restar la cantidad original del producto
         $producto = Producto::find($produccion->idProducto);
         $producto->cantidadDisponible -= $produccion->cantidadProducida;
 
-        // Actualizar la producción
         $produccion->fecha = $request->fecha;
         $produccion->cantidadProducida = $request->cantidadProducida;
-        $produccion->idProducto = $request->idProducto;
         $produccion->idEmpleadoResponsable = $request->idEmpleadoResponsable;
 
-        // Sumar la nueva cantidad
         $producto->cantidadDisponible += $request->cantidadProducida;
         $producto->save();
 
@@ -87,8 +94,6 @@ class ProduccionController extends Controller
     public function destroy($id)
     {
         $produccion = Produccion::findOrFail($id);
-
-        // Restar la cantidad del producto antes de eliminar la producción
         $producto = Producto::find($produccion->idProducto);
         $producto->cantidadDisponible -= $produccion->cantidadProducida;
         $producto->save();

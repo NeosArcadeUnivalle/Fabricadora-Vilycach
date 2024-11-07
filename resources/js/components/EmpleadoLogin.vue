@@ -5,17 +5,26 @@
                 <img src="/img/logo-fotor-2024092416012.png" alt="Logo" class="logo">
             </div>
             <h2>Iniciar Sesión - Empleados</h2>
-            
+
             <ul v-if="errors.length" class="error-list">
                 <li v-for="error in errors" :key="error">{{ error }}</li>
             </ul>
-            
+
             <form @submit.prevent="loginEmpleado">
                 <label for="correoElectronico">Correo Electrónico:</label>
                 <input type="email" v-model="correoElectronico" required />
 
                 <label for="password">Contraseña:</label>
-                <input type="password" v-model="password" required />
+                <div class="password-container">
+                    <input 
+                        :type="showPassword ? 'text' : 'password'" 
+                        v-model="password" 
+                        required 
+                    />
+                    <span @click="togglePasswordVisibility" class="password-toggle">
+                        <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                    </span>
+                </div>
 
                 <button type="submit">Iniciar Sesión</button>
             </form>
@@ -33,10 +42,14 @@ export default {
         return {
             correoElectronico: '',
             password: '',
+            showPassword: false, // Estado para controlar la visibilidad de la contraseña
             errors: [],
         };
     },
     methods: {
+        togglePasswordVisibility() {
+            this.showPassword = !this.showPassword;
+        },
         loginEmpleado() {
             this.errors = []; // Limpiar errores previos
 
@@ -125,6 +138,23 @@ form input {
     border: 1px solid #b22222;
     border-radius: 4px;
     box-sizing: border-box;
+}
+
+.password-container {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #333;
+}
+
+.password-toggle i {
+    font-size: 1.2em;
 }
 
 form button {
