@@ -53,7 +53,6 @@
         const fechaInput = document.querySelector('input[name="fecha"]');
         const today = new Date().toISOString().split('T')[0];
         fechaInput.setAttribute('max', today);
-
         fechaInput.addEventListener('change', function (event) {
             const selectedDate = new Date(event.target.value);
             if (selectedDate > new Date(today)) {
@@ -61,10 +60,26 @@
                 event.target.value = today;
             }
         });
-
         document.querySelector('input[name="cantidadProducida"]').addEventListener('input', function (event) {
             event.target.value = event.target.value.replace(/[^0-9]/g, '');
         });
     });
 </script>
+@if(session('success'))
+    <script>
+        alert("{{ session('success') }}");
+    </script>
+@endif
+
+@if(session('error'))
+    <script>
+        alert("{{ session('error') }}");
+    </script>
+@endif
+
+@if($errors->any())
+    <script>
+        alert("{{ $errors->first() }}");
+    </script>
+@endif
 @endsection
