@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Empleado;
 use App\Models\Persona;
+use Carbon\Carbon;
 
 class EmpleadoController extends Controller
 {
@@ -35,12 +36,12 @@ class EmpleadoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required|string|max:100',
-            'apellido' => 'required|string|max:100',
+            'nombre' => 'required|string|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/|max:100',
+            'apellido' => 'required|string|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/|max:100',
             'correoElectronico' => 'required|email|unique:empleados|max:100',
             'password' => 'required|string|min:8',
             'puesto' => 'required|string|max:50',
-            'fechaContratacion' => 'required|date'
+            'fechaContratacion' => 'required|date|before_or_equal:today'
         ]);
 
         // Crear Persona
@@ -70,12 +71,12 @@ class EmpleadoController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nombre' => 'required|string|max:100',
-            'apellido' => 'required|string|max:100',
+            'nombre' => 'required|string|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/|max:100',
+            'apellido' => 'required|string|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/|max:100',
             'correoElectronico' => 'required|string|email|max:100|unique:empleados,correoElectronico,' . $id . ',idEmpleado',
             'password' => 'nullable|string|min:8',
             'puesto' => 'required|string|max:50',
-            'fechaContratacion' => 'required|date',
+            'fechaContratacion' => 'required|date|before_or_equal:today',
         ]);
     
         $empleado = Empleado::findOrFail($id);

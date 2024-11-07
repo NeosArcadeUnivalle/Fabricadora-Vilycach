@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grupo Industrial Vilycach</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
     <style>
         /* General Page Styles */
         body {
@@ -15,25 +12,25 @@
             color: #333;
             font-family: 'Poppins', sans-serif;
         }
-
+ 
         /* Navbar */
         .navbar {
             background-color: #b22222;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-
+ 
         .navbar-brand {
             font-weight: bold;
             color: #ffd700 !important;
             font-size: 1.8em;
         }
-
+ 
         .navbar-brand img {
             width: 50px;
             height: 50px;
             margin-right: 10px;
         }
-
+ 
         .nav-link {
             color: #fff !important;
             font-weight: 600;
@@ -42,11 +39,11 @@
             letter-spacing: 0.05em;
             transition: color 0.3s;
         }
-
+ 
         .nav-link:hover {
             color: #ffd700 !important;
         }
-
+ 
         /* Hero Section */
         .hero-section {
             display: flex;
@@ -60,19 +57,19 @@
             color: #fff;
             text-align: center;
         }
-
+ 
         .hero-section h1 {
             font-size: 3em;
             font-weight: bold;
             color: #ffd700;
         }
-
+ 
         .hero-section h2 {
             font-size: 1.5em;
             color: #fff;
             margin-top: 10px;
         }
-
+ 
         /* Sections */
         .section-title {
             font-size: 2em;
@@ -81,23 +78,23 @@
             margin-bottom: 20px;
             text-align: center;
         }
-
+ 
         /* Card Styles */
         .card {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border: none;
         }
-
+ 
         .card-title {
             color: #b22222;
             font-weight: bold;
         }
-
+ 
         .card-body p {
             font-size: 0.9em;
             color: #333;
         }
-
+ 
         /* Footer */
         footer {
             background-color: #333;
@@ -105,24 +102,24 @@
             padding: 40px 0;
             font-size: 0.9em;
         }
-
+ 
         footer .footer-logo {
             font-weight: bold;
             color: #ffd700;
             font-size: 1.5em;
         }
-
+ 
         footer .social-icons a {
             color: #ffd700;
             margin: 0 10px;
             font-size: 1.2em;
             transition: color 0.3s;
         }
-
+ 
         footer .social-icons a:hover {
             color: #b22222;
         }
-
+ 
         /* Scroll-to-top Button */
         .scroll-to-top {
             display: none;
@@ -138,14 +135,14 @@
             z-index: 1000;
             transition: background-color 0.3s;
         }
-
+ 
         .scroll-to-top:hover {
             background-color: #8b0000;
         }
     </style>
 </head>
 <body>
-
+ 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
@@ -174,7 +171,7 @@
             </div>
         </div>
     </nav>
-
+ 
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
@@ -182,7 +179,7 @@
             <h2>¡Construyamos juntos el futuro, ladrillo a ladrillo!</h2>
         </div>
     </section>
-
+ 
     <!-- Misión y Visión Section -->
     <section id="Mision" class="py-5">
         <div class="container">
@@ -215,7 +212,7 @@
             </div>
         </div>
     </section>
-
+ 
     <!-- Servicios Section -->
     <section id="Servicios" class="py-5 bg-light">
         <div class="container">
@@ -248,7 +245,7 @@
             </div>
         </div>
     </section>
-
+ 
     <!-- Contact Section with Map -->
     <section id="Contacto" class="py-5">
         <div class="container">
@@ -265,7 +262,7 @@
             </div>
         </div>
     </section>
-
+ 
     <!-- Footer -->
     <footer class="text-center">
         <div class="container py-4">
@@ -278,25 +275,15 @@
             </div>
         </div>
     </footer>
-
+ 
     <a href="#" class="scroll-to-top rounded">
         <i class="fas fa-chevron-up"></i>
     </a>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+ 
+    <!-- Required JavaScript for Bootstrap and Navbar Toggle -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/3288cf83f6.js" crossorigin="anonymous"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const scrollBtn = document.querySelector('.scroll-to-top');
-            window.addEventListener('scroll', function () {
-                scrollBtn.style.display = window.scrollY > 100 ? 'block' : 'none';
-            });
-            scrollBtn.addEventListener('click', function (e) {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        });
-    </script>
-
+ 
 </body>
 </html>
