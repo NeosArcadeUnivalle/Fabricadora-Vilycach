@@ -41,23 +41,36 @@
         const nuevoTipoLadrilloField = document.getElementById('nuevoTipoLadrilloField');
         nuevoTipoLadrilloField.style.display = this.value === 'nuevo' ? 'block' : 'none';
     });
-
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelector('input[name="nombreProducto"]').addEventListener('input', function (event) {
             event.target.value = event.target.value.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 100);
         });
-
         document.querySelector('input[name="cantidadDisponible"]').addEventListener('input', function (event) {
             event.target.value = event.target.value.replace(/[^0-9]/g, '');
         });
-
         document.querySelector('input[name="precio"]').addEventListener('input', function (event) {
             event.target.value = event.target.value.replace(/[^0-9.]/g, '');
         });
-
         document.querySelector('input[name="nuevoTipoLadrillo"]').addEventListener('input', function (event) {
             event.target.value = event.target.value.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 100);
         });
     });
 </script>
+@if(session('success'))
+    <script>
+        alert("{{ session('success') }}");
+    </script>
+@endif
+
+@if(session('error'))
+    <script>
+        alert("{{ session('error') }}");
+    </script>
+@endif
+
+@if($errors->any())
+    <script>
+        alert("{{ $errors->first() }}");
+    </script>
+@endif
 @endsection

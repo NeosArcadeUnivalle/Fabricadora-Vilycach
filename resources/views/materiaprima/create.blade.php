@@ -38,25 +38,35 @@
 <!-- Scripts de validación -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Validar campo "Nombre del Proveedor"
         document.querySelector('input[name="nombreProveedor"]').addEventListener('input', function (event) {
             event.target.value = event.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '').substring(0, 100);
         });
-
-        // Validar campo "Teléfono" - solo números
         document.querySelector('input[name="telefonoProveedor"]').addEventListener('input', function (event) {
             event.target.value = event.target.value.replace(/[^0-9]/g, '').substring(0, 20);
         });
-
-        // Validar campo "Nombre de la Materia Prima"
         document.querySelector('input[name="nombreMateriaPrima"]').addEventListener('input', function (event) {
             event.target.value = event.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '').substring(0, 100);
         });
-
-        // Validar campo "Cantidad Disponible" - solo números y punto decimal
         document.querySelector('input[name="cantidadDisponible"]').addEventListener('input', function (event) {
             event.target.value = event.target.value.replace(/[^0-9.]/g, '');
         });
     });
 </script>
+@if(session('success'))
+    <script>
+        alert("{{ session('success') }}");
+    </script>
+@endif
+
+@if(session('error'))
+    <script>
+        alert("{{ session('error') }}");
+    </script>
+@endif
+
+@if($errors->any())
+    <script>
+        alert("{{ $errors->first() }}");
+    </script>
+@endif
 @endsection

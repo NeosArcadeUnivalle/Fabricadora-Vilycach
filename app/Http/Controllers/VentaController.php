@@ -76,7 +76,7 @@ class VentaController extends Controller
         ]);        
 
         if ($venta) {
-            return redirect()->route('home')->with('success', 'Venta registrada exitosamente.');
+            return redirect()->back()->with('success', 'Venta registrada exitosamente, espera a que un encargado se comunique con usted.');
         } else {
             return redirect()->back()->with('error', 'Hubo un problema al registrar la venta.');
         }

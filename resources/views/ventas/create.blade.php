@@ -183,42 +183,49 @@
     function updateTotal() {
         const productoSelect = document.getElementById('producto');
         const cantidadInput = document.getElementById('cantidad');
-        
         const selectedOption = productoSelect.options[productoSelect.selectedIndex];
         const precio = parseFloat(selectedOption.getAttribute('data-precio'));
         const cantidad = parseInt(cantidadInput.value) || 1;
-
         const total = precio * cantidad;
         document.getElementById('total').innerText = total.toFixed(2);
     }
-
     document.getElementById('nombre').addEventListener('input', (event) => {
         event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').substring(0, 100);
     });
-
     document.getElementById('apellido').addEventListener('input', (event) => {
         event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').substring(0, 100);
     });
-
     document.getElementById('empresa').addEventListener('input', (event) => {
         event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').substring(0, 100);
     });
-
     document.getElementById('nombreLugarVenta').addEventListener('input', (event) => {
         event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').substring(0, 100);
     });
-
     document.getElementById('ciudad').addEventListener('input', (event) => {
         event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').substring(0, 100);
     });
-
     function validateLength(element, maxLength) {
         if (element.value.length > maxLength) {
             element.value = element.value.slice(0, maxLength);
         }
     }
-
     document.addEventListener('DOMContentLoaded', updateTotal);
 </script>
+@if(session('success'))
+    <script>
+        alert("{{ session('success') }}");
+    </script>
+@endif
 
+@if(session('error'))
+    <script>
+        alert("{{ session('error') }}");
+    </script>
+@endif
+
+@if($errors->any())
+    <script>
+        alert("{{ $errors->first() }}");
+    </script>
+@endif
 @endsection
