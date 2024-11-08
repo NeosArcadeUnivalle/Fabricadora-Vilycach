@@ -43,3 +43,5 @@ Route::get('/api/empleados', [EmpleadoController::class, 'getEmpleados']);
 Route::delete('/empleados/{id}', [EmpleadoController::class, 'destroy'])->name('empleados.destroy');
 
 Route::get('/catalogo', [CatalogoController::class, 'index']);
+
+Route::get('/notificaciones', [VentaController::class, 'verNotificaciones'])->name('notificaciones.index');
