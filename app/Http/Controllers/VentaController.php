@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use App\Models\Venta;
 use App\Models\Producto;
 use App\Models\Cliente;
@@ -12,6 +13,44 @@ use Carbon\Carbon;
 
 class VentaController extends Controller
 {
+    private function registrarNotificacion($cliente, $producto, $cantidad)
+    {
+        $fecha = Carbon::now()->format('Y-m-d H:i:s');
+        $tipoLadrillo = $producto->tipoLadrillo->tipoLadrillo; // Obtenemos solo el nombre del tipo de ladrillo
+    
+        $notificacion = [
+            'mensaje' => "{$cliente->persona->nombre} {$cliente->persona->apellido} realizó una solicitud!!! Producto: {$tipoLadrillo} {$producto->nombreProducto} - Cantidad: {$cantidad} - Teléfono: {$cliente->telefono} - {$fecha}",
+        ];
+    
+        // Leer las notificaciones actuales
+        $notificaciones = Storage::exists('notificaciones.json') 
+            ? json_decode(Storage::get('notificaciones.json'), true) 
+            : [];
+    
+        if (!is_array($notificaciones)) {
+            $notificaciones = [];
+        }
+    
+        // Añadir la nueva notificación
+        array_unshift($notificaciones, $notificacion);
+    
+        // Mantener solo las últimas 20 notificaciones
+        if (count($notificaciones) > 20) {
+            $notificaciones = array_slice($notificaciones, 0, 20);
+        }
+    
+        // Guardar las notificaciones actualizadas
+        Storage::put('notificaciones.json', json_encode($notificaciones));
+    }    
+    public function verNotificaciones()
+    {
+        $notificaciones = Storage::exists('notificaciones.json')
+            ? json_decode(Storage::get('notificaciones.json'), true)
+            : [];
+
+        return view('ventas.notificaciones', compact('notificaciones'));
+    }
+
     public function create()
     {
         // Obtener todos los productos con su tipo de ladrillo
@@ -74,7 +113,7 @@ class VentaController extends Controller
             'fecha' => Carbon::now(),
             'estado' => 'En espera',
         ]);        
-
+        $this->registrarNotificacion($cliente, $producto, $cantidad);
         if ($venta) {
             return redirect()->back()->with('success', 'Venta registrada exitosamente, espera a que un encargado se comunique con usted.');
         } else {
@@ -84,14 +123,11 @@ class VentaController extends Controller
 
     public function index(Request $request)
     {
+        // Obtener las ventas como ya lo haces
         $query = Venta::with('cliente.persona', 'producto', 'lugarVenta');
-    
-        // Filtro por estado
         if ($request->has('estado') && $request->estado != '') {
             $query->where('estado', $request->estado);
         }
-    
-        // Filtro de búsqueda
         if ($request->has('search')) {
             $search = $request->search;
             $query->whereHas('cliente.persona', function ($q) use ($search) {
@@ -99,11 +135,14 @@ class VentaController extends Controller
                   ->orWhere('apellido', 'like', "%$search%");
             });
         }
-    
-        // Paginación
         $ventas = $query->paginate(5);
     
-        return view('ventas.index', compact('ventas'));
+        // Leer notificaciones desde el archivo JSON
+        $notificaciones = Storage::exists('notificaciones.json')
+            ? json_decode(Storage::get('notificaciones.json'), true)
+            : [];
+    
+        return view('ventas.index', compact('ventas', 'notificaciones'));
     }
     
     public function edit($id)

@@ -105,6 +105,22 @@
             margin-bottom: 10px;
         }
     }
+    .notification-icon {
+        position: absolute;
+        top: 100px; /* Ajusta este valor para moverlo más abajo */
+        right: 30px;
+        font-size: 1.8em; /* Ajusta el tamaño de la campana */
+    }
+    .notification-icon .badge {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        padding: 5px 10px;
+        font-size: 0.8em;
+    }
 </style>
 
 <!-- Script para el toggle del menú en móvil -->
@@ -115,8 +131,11 @@
     }
 </script>
 <div class="container">
+    <a href="{{ route('notificaciones.index') }}" class="notification-icon">
+        <i class="fa fa-bell"></i>
+        <span class="badge">{{ is_array($notificaciones) ? count($notificaciones) : 0 }}</span>
+    </a>
     <h1>Lista de Ventas</h1>
-
     <!-- Filtro de búsqueda -->
     <div class="mb-3">
         <form method="GET" action="{{ route('ventas.index') }}">
