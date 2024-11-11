@@ -104,13 +104,26 @@
             margin-bottom: 10px;
         }
     }
+    .list-group-item.font-weight-bold {
+        font-weight: bold; 
+    }
+    .list-group-item.text-muted.bg-light {
+        background-color: #f8f9fa; 
+        color: #6c757d; 
+    }
 </style>
 <div class="container">
     <h1>Notificaciones</h1>
 
+    <!-- Botón para marcar todas las notificaciones como vistas -->
+    <form action="{{ route('notificaciones.marcarVistas') }}" method="POST">
+        @csrf
+        <button type="submit" class="btn btn-primary mb-3">Marcar todas como vistas</button>
+    </form>
+
     <ul class="list-group">
         @forelse ($notificaciones as $notificacion)
-            <li class="list-group-item">
+            <li class="list-group-item {{ $notificacion['visto'] ? 'text-muted bg-light' : 'font-weight-bold' }}">
                 {{ $notificacion['mensaje'] }}
             </li>
         @empty

@@ -41,7 +41,7 @@ class EmpleadoController extends Controller
             'correoElectronico' => 'required|email|unique:empleados|max:100',
             'password' => 'required|string|min:8',
             'puesto' => 'required|string|max:50',
-            'fechaContratacion' => 'required|date|before_or_equal:today'
+            'fechaContratacion' => 'required|date|before_or_equal:today|after_or_equal:' . Carbon::now()->subYears(50)->format('Y-m-d'),
         ]);
 
         // Crear Persona
@@ -73,10 +73,10 @@ class EmpleadoController extends Controller
         $request->validate([
             'nombre' => 'required|string|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/|max:100',
             'apellido' => 'required|string|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/|max:100',
-            'correoElectronico' => 'required|string|email|max:100|unique:empleados,correoElectronico,' . $id . ',idEmpleado',
-            'password' => 'nullable|string|min:8',
+            'correoElectronico' => 'required|email|unique:empleados|max:100',
+            'password' => 'required|string|min:8',
             'puesto' => 'required|string|max:50',
-            'fechaContratacion' => 'required|date|before_or_equal:today',
+            'fechaContratacion' => 'required|date|before_or_equal:today|after_or_equal:' . Carbon::now()->subYears(50)->format('Y-m-d'),
         ]);
     
         $empleado = Empleado::findOrFail($id);

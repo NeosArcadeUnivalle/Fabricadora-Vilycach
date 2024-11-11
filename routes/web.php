@@ -45,3 +45,8 @@ Route::delete('/empleados/{id}', [EmpleadoController::class, 'destroy'])->name('
 Route::get('/catalogo', [CatalogoController::class, 'index']);
 
 Route::get('/notificaciones', [VentaController::class, 'verNotificaciones'])->name('notificaciones.index');
+Route::post('/notificaciones/marcar-vistas', [VentaController::class, 'marcarNotificacionesVistas'])->name('notificaciones.marcarVistas');
+
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
+});

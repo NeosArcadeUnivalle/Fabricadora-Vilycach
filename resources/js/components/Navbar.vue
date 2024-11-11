@@ -2,7 +2,7 @@
     <nav v-if="!shouldHideNavbar" class="navbar-container">
         <div class="navbar">
             <div class="navbar-left">
-                <a href="/" class="navbar-logo">
+                <a class="navbar-logo">
                     <img src="/img/logo-fotor-2024092416012.png" alt="Logo" class="logo-img">
                 </a>
             </div>

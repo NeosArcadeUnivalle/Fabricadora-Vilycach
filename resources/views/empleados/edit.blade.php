@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+    <br>
     <h1>Editar Empleado</h1>
     <form action="{{ route('empleados.update', $empleado->idEmpleado) }}" method="POST">
         @csrf
@@ -48,40 +49,41 @@
     </form>
 </div>
 
-<!-- Scripts de validación -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Validar campo "Nombre"
         document.querySelector('input[name="nombre"]').addEventListener('input', function (event) {
-            event.target.value = event.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '').substring(0, 100);
+            event.target.value = event.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '').substring(0, 35);
         });
-
-        // Validar campo "Apellido"
         document.querySelector('input[name="apellido"]').addEventListener('input', function (event) {
-            event.target.value = event.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '').substring(0, 100);
+            event.target.value = event.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '').substring(0, 35);
         });
-
-        // Validar campo "Correo Electrónico" (email format - se gestiona en HTML5)
-        document.querySelector('input[name="correoElectronico"]').setAttribute('maxlength', '100');
-
-        // Validar campo "Contraseña" (mínimo 8 caracteres, sin caracteres específicos)
+        document.querySelector('input[name="correoElectronico"]').setAttribute('maxlength', '35');
         document.querySelector('input[name="password"]').setAttribute('minlength', '8');
-
-        // Validar campo "Puesto" (solo letras y espacios, máximo 50 caracteres)
         document.querySelector('input[name="puesto"]').addEventListener('input', function (event) {
-            event.target.value = event.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '').substring(0, 50);
+            event.target.value = event.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '').substring(0, 35);
         });
-
         const fechaContratacionInput = document.querySelector('input[name="fechaContratacion"]');
         const today = new Date();
         const formattedToday = today.toISOString().split('T')[0];
+        
+        // Fecha máxima es hoy
         fechaContratacionInput.setAttribute('max', formattedToday);
 
-        fechaContratacionInput.addEventListener('change', function (event) {
+        // Fecha mínima es 50 años atrás
+        const fiftyYearsAgo = new Date();
+        fiftyYearsAgo.setFullYear(today.getFullYear() - 50);
+        const formattedFiftyYearsAgo = fiftyYearsAgo.toISOString().split('T')[0];
+        fechaContratacionInput.setAttribute('min', formattedFiftyYearsAgo);
+
+        // Validación adicional en el evento 'input'
+        fechaContratacionInput.addEventListener('input', function (event) {
             const selectedDate = new Date(event.target.value);
             if (selectedDate > today) {
                 alert('La fecha de contratación no puede ser futura. Se ajustará a la fecha de hoy.');
-                event.target.value = formattedToday; // Ajustar automáticamente a la fecha de hoy si se selecciona una futura
+                event.target.value = formattedToday;
+            } else if (selectedDate < fiftyYearsAgo) {
+                alert('La fecha de contratación no puede ser anterior a 50 años. Se ajustará a la fecha mínima permitida.');
+                event.target.value = formattedFiftyYearsAgo;
             }
         });
     });

@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+    <br>
     <h2 class="mb-4">Editar Venta</h2>
     <form action="{{ route('ventas.update', $venta->idVenta) }}" method="POST">
         @csrf
@@ -66,6 +67,9 @@
         
         document.querySelector('#precioTotal').innerText = (precio * document.querySelector('#cantidad').value).toFixed(2);
     }
+    document.querySelector('input[name="cantidad"]').addEventListener('input', function (event) {
+            event.target.value = event.target.value.replace(/[^0-9.]/g, '').substring(0, 9);
+        });
 
     // Cálculo inicial del total
     document.addEventListener('DOMContentLoaded', calcularTotal);

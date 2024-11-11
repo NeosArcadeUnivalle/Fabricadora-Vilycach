@@ -16,32 +16,47 @@ class VentaController extends Controller
     private function registrarNotificacion($cliente, $producto, $cantidad)
     {
         $fecha = Carbon::now()->format('Y-m-d H:i:s');
-        $tipoLadrillo = $producto->tipoLadrillo->tipoLadrillo; // Obtenemos solo el nombre del tipo de ladrillo
+        $tipoLadrillo = $producto->tipoLadrillo->tipoLadrillo;
     
         $notificacion = [
             'mensaje' => "{$cliente->persona->nombre} {$cliente->persona->apellido} realizó una solicitud!!! Producto: {$tipoLadrillo} {$producto->nombreProducto} - Cantidad: {$cantidad} - Teléfono: {$cliente->telefono} - {$fecha}",
+            'visto' => false, // Estado de la notificación (no vista)
         ];
     
-        // Leer las notificaciones actuales
-        $notificaciones = Storage::exists('notificaciones.json') 
-            ? json_decode(Storage::get('notificaciones.json'), true) 
+        $notificaciones = Storage::exists('notificaciones.json')
+            ? json_decode(Storage::get('notificaciones.json'), true)
             : [];
     
         if (!is_array($notificaciones)) {
             $notificaciones = [];
         }
     
-        // Añadir la nueva notificación
         array_unshift($notificaciones, $notificacion);
     
-        // Mantener solo las últimas 20 notificaciones
         if (count($notificaciones) > 20) {
             $notificaciones = array_slice($notificaciones, 0, 20);
         }
     
-        // Guardar las notificaciones actualizadas
         Storage::put('notificaciones.json', json_encode($notificaciones));
-    }    
+    }
+
+    public function marcarNotificacionesVistas()
+    {
+    $notificaciones = Storage::exists('notificaciones.json')
+        ? json_decode(Storage::get('notificaciones.json'), true)
+        : [];
+
+    if (is_array($notificaciones)) {
+        foreach ($notificaciones as &$notificacion) {
+            $notificacion['visto'] = true;
+        }
+    }
+
+    Storage::put('notificaciones.json', json_encode($notificaciones));
+
+    return redirect()->route('notificaciones.index')->with('success', 'Todas las notificaciones han sido marcadas como vistas.');
+    }
+
     public function verNotificaciones()
     {
         $notificaciones = Storage::exists('notificaciones.json')
@@ -51,12 +66,19 @@ class VentaController extends Controller
         return view('ventas.notificaciones', compact('notificaciones'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        // Obtener todos los productos con su tipo de ladrillo
         $productos = Producto::with('tipoLadrillo')->get();
-        return view('ventas.create', compact('productos'));
+        $productoSeleccionado = null;
+        $cantidadSeleccionada = 1;
+    
+        if ($request->has('producto_id') && $request->has('cantidad')) {
+            $productoSeleccionado = Producto::find($request->input('producto_id'));
+            $cantidadSeleccionada = (int) $request->input('cantidad');
+        }
+        return view('ventas.create', compact('productos', 'productoSeleccionado', 'cantidadSeleccionada'));
     }
+    
 
     public function store(Request $request)
     {

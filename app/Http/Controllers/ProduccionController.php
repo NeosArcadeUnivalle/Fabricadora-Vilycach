@@ -38,8 +38,8 @@ class ProduccionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'fecha' => 'required|date|before_or_equal:today',
-            'cantidadProducida' => 'required|numeric|min:1',
+            'fecha' => 'required|date|before_or_equal:today|after_or_equal:' . now()->subYear()->format('Y-m-d'),
+            'cantidadProducida' => 'required|numeric|min:1|max:9999999', 
             'idProducto' => 'required|exists:productos,idProducto',
             'idEmpleadoResponsable' => 'required|exists:empleados,idEmpleado',
         ]);
@@ -70,8 +70,8 @@ class ProduccionController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'fecha' => 'required|date|before_or_equal:today',
-            'cantidadProducida' => 'required|numeric|min:1',
+            'fecha' => 'required|date|before_or_equal:today|after_or_equal:' . now()->subYear()->format('Y-m-d'),
+            'cantidadProducida' => 'required|numeric|min:1|max:9999999',
             'idEmpleadoResponsable' => 'required|exists:empleados,idEmpleado',
         ]);
 

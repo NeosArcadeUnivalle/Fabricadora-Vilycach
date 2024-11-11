@@ -115,6 +115,7 @@
     }
 </script>
 <div class="container">
+    <br>
         <h1>Lista de Productos</h1>
 
         <!-- Formulario de búsqueda -->

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@php
+    $notificacionesNoVistas = collect($notificaciones)->where('visto', false)->count();
+@endphp
+
 @section('content')
 <!-- Estilos estilizados específicos para el navbar en esta vista -->
 <style>
@@ -133,7 +137,7 @@
 <div class="container">
     <a href="{{ route('notificaciones.index') }}" class="notification-icon">
         <i class="fa fa-bell"></i>
-        <span class="badge">{{ is_array($notificaciones) ? count($notificaciones) : 0 }}</span>
+        <span class="badge">{{ $notificacionesNoVistas }}</span>
     </a>
     <h1>Lista de Ventas</h1>
     <!-- Filtro de búsqueda -->

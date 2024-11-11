@@ -34,7 +34,7 @@ class MateriaPrimaController extends Controller
     {
         $request->validate([
             'nombreProveedor' => 'required|string|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/|max:100',
-            'telefonoProveedor' => 'required|numeric|digits_between:7,20',
+            'telefonoProveedor' => 'required|numeric|digits_between:7,8',
             'direccionProveedor' => 'required|string|max:255',
             'nombreMateriaPrima' => 'required|string|max:100',
             'cantidadDisponible' => 'required|numeric|min:0',
@@ -66,7 +66,7 @@ class MateriaPrimaController extends Controller
     {
         $request->validate([
             'nombreProveedor' => 'required|string|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/|max:100',
-            'telefonoProveedor' => 'required|numeric|digits_between:7,20',
+            'telefonoProveedor' => 'required|numeric|digits_between:7,8',
             'direccionProveedor' => 'required|string|max:255',
             'nombreMateriaPrima' => 'required|string|max:100',
             'cantidadAction' => 'nullable|string',

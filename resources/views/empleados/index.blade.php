@@ -119,6 +119,7 @@
 
 <!-- Contenido principal de la vista -->
 <div class="container">
+    <br>
     <h1>Lista de Empleados</h1>
 
     <!-- Formulario de búsqueda -->

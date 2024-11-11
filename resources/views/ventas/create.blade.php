@@ -83,15 +83,17 @@
                         <label for="producto" class="form-label">Producto:</label>
                         <select name="producto" id="producto" class="form-select" required onchange="updateTotal()">
                             @foreach($productos as $producto)
-                                <option value="{{ $producto->idProducto }}" data-precio="{{ $producto->precio }}" data-tipo="{{ $producto->tipoLadrillo->tipoLadrillo }}">
-                                    {{ $producto->nombreProducto }} ({{ number_format($producto->precio, 2) }} Bs) - Tipo: {{ $producto->tipoLadrillo->tipoLadrillo }}
+                                <option value="{{ $producto->idProducto }}" data-precio="{{ $producto->precio }}" data-tipo="{{ $producto->tipoLadrillo->tipoLadrillo }}"
+                                @if(isset($productoSeleccionado) && $productoSeleccionado->idProducto == $producto->idProducto) selected @endif>
+                                {{ $producto->nombreProducto }} ({{ number_format($producto->precio, 2) }} Bs) - Tipo: {{ $producto->tipoLadrillo->tipoLadrillo }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="col-md-4">
                         <label for="cantidad" class="form-label">Cantidad:</label>
-                        <input type="number" name="cantidad" id="cantidad" value="1" min="1" max="999999" class="form-control" oninput="updateTotal(); validateLength(this, 6)" required>
+                        <input type="number" name="cantidad" id="cantidad" value="{{ $cantidadSeleccionada }}" min="1" max="999999" class="form-control" oninput="updateTotal(); validateLength(this, 6)" required>
+
                     </div>
                 </div>
             </div>
@@ -108,8 +110,9 @@
                     </div>
                     <div class="col-md-4">
                         <label for="direccion" class="form-label">Dirección:</label>
-                        <input type="text" name="direccion" value="{{ old('direccion') }}" class="form-control" maxlength="255" required>
+                        <input type="text" name="direccion" id="direccion" value="{{ old('direccion') }}" class="form-control" maxlength="35" required>
                     </div>
+
                     <div class="col-md-4">
                         <label for="ciudad" class="form-label">Ciudad:</label>
                         <input type="text" name="ciudad" id="ciudad" value="{{ old('ciudad') }}" class="form-control" maxlength="100" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo letras y hasta 100 caracteres" required>
@@ -189,21 +192,31 @@
         const total = precio * cantidad;
         document.getElementById('total').innerText = total.toFixed(2);
     }
+    document.querySelector('input[name="cantidad"]').addEventListener('input', function (event) {
+            event.target.value = event.target.value.replace(/[^0-9.]/g, '').substring(0, 9);
+    });
+    document.querySelector('input[name="telefono"]').addEventListener('input', function (event) {
+            event.target.value = event.target.value.replace(/[^0-9.]/g, '').substring(0, 8);
+    });
     document.getElementById('nombre').addEventListener('input', (event) => {
-        event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').substring(0, 100);
+        event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').substring(0, 35);
     });
     document.getElementById('apellido').addEventListener('input', (event) => {
-        event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').substring(0, 100);
+        event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').substring(0, 35);
     });
     document.getElementById('empresa').addEventListener('input', (event) => {
-        event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').substring(0, 100);
+        event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').substring(0, 35);
     });
     document.getElementById('nombreLugarVenta').addEventListener('input', (event) => {
-        event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').substring(0, 100);
+        event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').substring(0, 35);
     });
     document.getElementById('ciudad').addEventListener('input', (event) => {
-        event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').substring(0, 100);
+        event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').substring(0, 35);
     });
+    document.getElementById('direccion').addEventListener('input', (event) => {
+    event.target.value = event.target.value.substring(0, 35);
+    });
+
     function validateLength(element, maxLength) {
         if (element.value.length > maxLength) {
             element.value = element.value.slice(0, maxLength);

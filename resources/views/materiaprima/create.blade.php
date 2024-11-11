@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+    <br>
     <h1>Agregar Proveedor y Materia Prima</h1>
     <form action="{{ route('materiaprima.store') }}" method="POST">
         @csrf
@@ -27,28 +28,34 @@
         </div>
         <div class="form-group">
             <label for="cantidadDisponible">Cantidad Disponible</label>
-            <input type="number" name="cantidadDisponible" class="form-control" step="0.01" required min="0">
+            <input type="text" name="cantidadDisponible" class="form-control" step="0.01" required min="0">
         </div>
-
+        <br>
         <button type="submit" class="btn btn-success">Guardar</button>
         <a href="{{ route('materiaprima.index') }}" class="btn btn-secondary">Regresar</a>
     </form>
 </div>
 
-<!-- Scripts de validación -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelector('input[name="nombreProveedor"]').addEventListener('input', function (event) {
-            event.target.value = event.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '').substring(0, 100);
+            event.target.value = event.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '').substring(0, 35);
         });
+        
         document.querySelector('input[name="telefonoProveedor"]').addEventListener('input', function (event) {
-            event.target.value = event.target.value.replace(/[^0-9]/g, '').substring(0, 20);
+            event.target.value = event.target.value.replace(/[^0-9]/g, '').substring(0, 8);
         });
+
+        document.querySelector('input[name="direccionProveedor"]').addEventListener('input', function (event) {
+            event.target.value = event.target.value.substring(0, 35); // Limita a 35 caracteres
+        });
+
         document.querySelector('input[name="nombreMateriaPrima"]').addEventListener('input', function (event) {
-            event.target.value = event.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '').substring(0, 100);
+            event.target.value = event.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '').substring(0, 35);
         });
+        
         document.querySelector('input[name="cantidadDisponible"]').addEventListener('input', function (event) {
-            event.target.value = event.target.value.replace(/[^0-9.]/g, '');
+            event.target.value = event.target.value.replace(/[^0-9.]/g, '').substring(0, 9);
         });
     });
 </script>

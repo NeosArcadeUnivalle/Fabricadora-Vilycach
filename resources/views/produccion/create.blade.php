@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+    <br>
     <h1>Registrar Producción</h1>
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -20,7 +21,7 @@
         </div>
         <div class="form-group">
             <label for="cantidadProducida">Cantidad Producida</label>
-            <input type="number" name="cantidadProducida" class="form-control" required min="1" step="1">
+            <input type="text" name="cantidadProducida" class="form-control" required min="1" step="1">
         </div>
         <div class="form-group">
             <label for="idProducto">Producto</label>
@@ -42,6 +43,7 @@
                 @endforeach
             </select>
         </div>
+        <br>
         <button type="submit" class="btn btn-primary">Guardar</button>
         <a href="{{ route('produccion.index') }}" class="btn btn-secondary">Regresar</a>
     </form>
@@ -51,20 +53,41 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const fechaInput = document.querySelector('input[name="fecha"]');
-        const today = new Date().toISOString().split('T')[0];
-        fechaInput.setAttribute('max', today);
+        const today = new Date();
+        const oneYearAgo = new Date();
+        oneYearAgo.setFullYear(today.getFullYear() - 1);
+
+        const formattedToday = today.toISOString().split('T')[0];
+        const formattedOneYearAgo = oneYearAgo.toISOString().split('T')[0];
+
+        // Establecer el rango de fecha permitido
+        fechaInput.setAttribute('max', formattedToday);
+        fechaInput.setAttribute('min', formattedOneYearAgo);
+
         fechaInput.addEventListener('change', function (event) {
             const selectedDate = new Date(event.target.value);
-            if (selectedDate > new Date(today)) {
+            if (selectedDate > today) {
                 alert('La fecha de producción no puede ser futura.');
-                event.target.value = today;
+                event.target.value = formattedToday;
+            } else if (selectedDate < oneYearAgo) {
+                alert('La fecha de producción no puede ser anterior a un año desde hoy.');
+                event.target.value = formattedOneYearAgo;
             }
         });
+
         document.querySelector('input[name="cantidadProducida"]').addEventListener('input', function (event) {
-            event.target.value = event.target.value.replace(/[^0-9]/g, '');
+            event.target.value = event.target.value.replace(/[^0-9.]/g, '').substring(0, 9);
+
+            // Permitir solo un punto decimal
+            const parts = event.target.value.split('.');
+            if (parts.length > 2) {
+                event.target.value = parts[0] + '.' + parts[1];
+            }
         });
     });
 </script>
+
+
 @if(session('success'))
     <script>
         alert("{{ session('success') }}");

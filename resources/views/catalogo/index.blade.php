@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo de Productos</title>
+    <title>Grupo Industrial Vilycach</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4/dist/fancybox.css" />
     <style>
@@ -221,10 +221,14 @@
                 width: 100%;
                 justify-content: space-between;
             }
- 
-            .precio {
-                text-align: left;
-            }
+        }
+        .precio {
+        font-size: 26px; /* Aumenta el tamaño de la fuente */
+        font-weight: bold;
+        color: #e74c3c;
+        margin-top: 15px; /* Espacio superior */
+        margin-bottom: 15px; /* Espacio inferior */
+        text-align: left; /* Alineado a la izquierda */
         }
     </style>
 </head>
@@ -234,7 +238,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center">
-                <img src="{{ asset('img/logo-fotor-2024092416012.png') }}" alt="Logo">
+                <img src="img/logo-fotor-2024092416012.png" alt="Logo">
                 <span>Vilycach</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -242,18 +246,10 @@
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/ventas/create">Comprar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/catalogo">Catálogo</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/empleado/login">Login</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/ventas/create">Comprar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/catalogo">Catálogo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/empleado/login">Login</a></li>
                 </ul>
             </div>
         </div>
@@ -261,135 +257,164 @@
  
     <h1>Catálogo de Productos</h1>
     <div class="catalogo-container">
-     <!-- Producto 1 -->
-     <div class="catalogo-item">
-        <a href="{{ asset('img/Rayado6.jpg') }}" data-fancybox="gallery" data-caption="Ladrillo Rayado">
-            <img src="{{ asset('img/Rayado6.jpg') }}" alt="Ladrillo Rayado">
-        </a>
-        <div class="details">
-            <h2>Ladrillo Rayado</h2>
-            <p class="section-title">Descripción</p>
-            <p>Cerámica rectangular de 6 huecos en la cara frontal.</p>
-            <p class="section-title">Datos Físicos</p>
-            <p>Color: Naranja</p>
-            <p>Acabado: Textura de la superficie con estrías en todas sus caras.</p>
-            <p class="section-title">Dimensiones</p>
-            <p>Alto: 15 cm, Largo: 25 cm, Ancho: 10 cm, Peso: 2,7 Kg</p>
-            <p class="section-title">Rendimiento</p>
-            <p>23 Pzas/m2</p>
-            <p class="precio">Bs. 0.90</p>
-            <div class="quantity-container">
-                <button onclick="updateQuantity(-1, 'quantityRayado')">-</button>
-                <input type="text" id="quantityRayado" value="1" min="1">
-                <button onclick="updateQuantity(1, 'quantityRayado')">+</button>
-                <button class="add-to-cart-btn">Comprar!</button>
-            </div>
-        </div>
-    </div>
  
-    <!-- Producto 2 -->
-    <div class="catalogo-item">
-        <a href="{{ asset('img/Liso6.jpg') }}" data-fancybox="gallery" data-caption="Ladrillo Liso">
-            <img src="{{ asset('img/Liso6.jpg') }}" alt="Ladrillo Liso">
-        </a>
-        <div class="details">
-            <h2>Ladrillo Liso</h2>
-            <p class="section-title">Descripción</p>
-            <p>Producto de acabado liso con 2 líneas de costado, presenta 6 orificios en la parte frontal y posterior.</p>
-            <p class="section-title">Datos Físicos</p>
-            <p>Color: Terracota</p>
-            <p>Acabado: Textura de la superficie lisa en todas sus caras.</p>
-            <p class="section-title">Dimensiones</p>
-            <p>Alto: 15 cm, Largo: 25 cm, Ancho: 10 cm, Peso: 2,7 Kg</p>
-            <p class="section-title">Rendimiento</p>
-            <p>23 Pzas/m2</p>
-            <p class="precio">Bs. 1.00</p>
-            <div class="quantity-container">
-                <button onclick="updateQuantity(-1, 'quantityLiso')">-</button>
-                <input type="text" id="quantityLiso" value="1" min="1">
-                <button onclick="updateQuantity(1, 'quantityLiso')">+</button>
-                <button class="add-to-cart-btn">Comprar!</button>
+        <!-- Producto 1: Ladrillo Rayado -->
+        <div class="catalogo-item">
+            <a href="img/Rayado6.png" data-fancybox="gallery" data-caption="Ladrillo Rayado">
+                <img src="img/Rayado6.png" alt="Ladrillo Rayado">
+            </a>
+            <div class="details">
+                <h2>Ladrillo Rayado</h2>
+                <p class="section-title">Descripción</p>
+                <p>Cerámica rectangular de 6 huecos en la cara frontal.</p>
+                <p class="section-title">Datos Físicos</p>
+                <p>Color: Naranja</p>
+                <p class="section-title">Dimensiones</p>
+                <p>Alto: 15 cm, Largo: 25 cm, Ancho: 10 cm</p>
+                <p class="precio">Bs. 0.68</p>
+                <form action="/catalogo/comprar" method="POST">
+                   
+                    <input type="hidden" name="idProducto" value="1">
+                    <div class="quantity-container">
+                        <button type="button" onclick="updateQuantity(-1, 'quantity13')">-</button>
+                        <input type="text" id="quantity13" name="cantidad" value="1" min="1">
+                        <button type="button" onclick="updateQuantity(1, 'quantity13')">+</button>
+                        <button type="button" class="add-to-cart-btn" onclick="comprarProducto(13, 'quantity13')">Comprar!</button>
+                    </div>
+                </form>
             </div>
         </div>
-    </div>
  
-    <!-- Producto 3 -->
-    <div class="catalogo-item">
-        <a href="{{ asset('img/Gambote18.jpg') }}" data-fancybox="gallery" data-caption="Ladrillo Gambote">
-            <img src="{{ asset('img/Gambote18.jpg') }}" alt="Ladrillo Gambote">
-        </a>
-        <div class="details">
-            <h2>Ladrillo Gambote</h2>
-            <p class="section-title">Descripción</p>
-            <p>Cerámica rectangular con 18 huecos redondos en la cara superior y liso en sus caras.</p>
-            <p class="section-title">Datos Físicos</p>
-            <p>Color: Naranja</p>
-            <p>Acabado: Textura lisa en los laterales de la pieza.</p>
-            <p class="section-title">Dimensiones</p>
-            <p>Alto: 7,0 cm, Largo: 25 cm, Ancho: 12 cm, Peso: 2,35 Kg</p>
-            <p class="section-title">Rendimiento</p>
-            <p>45 Pzas/m2</p>
-            <p class="precio">Bs. 1.17</p>
-            <div class="quantity-container">
-                <button onclick="updateQuantity(-1, 'quantityGambote')">-</button>
-                <input type="text" id="quantityGambote" value="1" min="1">
-                <button onclick="updateQuantity(1, 'quantityGambote')">+</button>
-                <button class="add-to-cart-btn">Comprar!</button>
+        <!-- Producto 2: Ladrillo Liso -->
+        <div class="catalogo-item">
+            <a href="img/Liso6.png" data-fancybox="gallery" data-caption="Ladrillo Liso">
+                <img src="img/Liso6.png" alt="Ladrillo Liso">
+            </a>
+            <div class="details">
+                <h2>Ladrillo Liso</h2>
+                <p class="section-title">Descripción</p>
+                <p>Producto de acabado liso con 2 líneas de costado, presenta 6 orificios en la parte frontal y posterior.</p>
+                <p class="section-title">Datos Físicos</p>
+                <p>Color: Terracota</p>
+                <p class="section-title">Dimensiones</p>
+                <p>Alto: 15 cm, Largo: 25 cm, Ancho: 10 cm</p>
+                <p class="precio">Bs. 0.67</p>
+                <form action="/catalogo/comprar" method="POST">
+                    <input type="hidden" name="idProducto" value="2">
+                    <div class="quantity-container">
+                        <button type="button" onclick="updateQuantity(-1, 'quantity3')">-</button>
+                        <input type="text" id="quantity3" name="cantidad" value="1" min="1">
+                        <button type="button" onclick="updateQuantity(1, 'quantity3')">+</button>
+                        <button type="button" class="add-to-cart-btn" onclick="comprarProducto(3, 'quantity3')">Comprar!</button>
+                    </div>
+                </form>
             </div>
         </div>
-    </div>
  
-    <!-- Producto 4 -->
-    <div class="catalogo-item">
-        <a href="{{ asset('img/Bota5.jpg') }}" data-fancybox="gallery" data-caption="Ladrillo Bota Agua">
-            <img src="{{ asset('img/Bota5.jpg') }}" alt="Ladrillo Bota Agua">
-        </a>
-        <div class="details">
-            <h2>Ladrillo Bota Agua</h2>
-            <p class="section-title">Descripción</p>
-            <p>Cerámica rectangular con 5 huecos de diferentes tamaños en la cara frontal, liso en todas sus caras.</p>
-            <p class="section-title">Datos Físicos</p>
-            <p>Color: Terracota</p>
-            <p>Acabado: Textura de la superficie lisa en todas sus caras.</p>
-            <p class="section-title">Dimensiones</p>
-            <p>Alto: 9,5 cm, Largo: 24,5 cm, Ancho: 24,5 cm, Peso: 3,175 Kg</p>
-            <p class="section-title">Rendimiento</p>
-            <p>4 Pzas/m2</p>
-            <p class="precio">Bs. 2.84</p>
-            <div class="quantity-container">
-                <button onclick="updateQuantity(-1, 'quantityBota')">-</button>
-                <input type="text" id="quantityBota" value="1" min="1">
-                <button onclick="updateQuantity(1, 'quantityBota')">+</button>
-                <button class="add-to-cart-btn">Comprar!</button>
+        <!-- Producto 3: Ladrillo Gambote -->
+        <div class="catalogo-item">
+            <a href="img/Gambote18.png" data-fancybox="gallery" data-caption="Ladrillo Gambote">
+                <img src="img/Gambote18.png" alt="Ladrillo Gambote">
+            </a>
+            <div class="details">
+                <h2>Ladrillo Gambote</h2>
+                <p class="section-title">Descripción</p>
+                <p>Cerámica rectangular con 18 huecos redondos en la cara superior y liso en sus caras.</p>
+                <p class="section-title">Datos Físicos</p>
+                <p>Color: Naranja</p>
+                <p class="section-title">Dimensiones</p>
+                <p>Alto: 7.0 cm, Largo: 25 cm, Ancho: 12 cm</p>
+                <p class="precio">Bs. 2.1</p>
+                <form action="/catalogo/comprar" method="POST">
+                    <input type="hidden" name="idProducto" value="3">
+                    <div class="quantity-container">
+                        <button type="button" onclick="updateQuantity(-1, 'quantity5')">-</button>
+                        <input type="text" id="quantity5" name="cantidad" value="1" min="1">
+                        <button type="button" onclick="updateQuantity(1, 'quantity5')">+</button>
+                        <button type="button" class="add-to-cart-btn" onclick="comprarProducto(5, 'quantity5')">Comprar!</button>
+                    </div>
+                </form>
             </div>
         </div>
-    </div>
  
-    <!-- Producto 5 -->
-    <div class="catalogo-item">
-        <a href="{{ asset('img/Caida.jpg') }}" data-fancybox="gallery" data-caption="Bota Agua Una Caída">
-            <img src="{{ asset('img/Caida.jpg') }}" alt="Bota Agua Una Caída">
-        </a>
-        <div class="details">
-            <h2>Bota Agua Una Caída</h2>
-            <p class="section-title">Descripción</p>
-            <p>Cerámica rectangular con 4 huecos de diferentes tamaños en la cara frontal, liso en todas sus caras.</p>
-            <p class="section-title">Datos Físicos</p>
-            <p>Color: Terracota</p>
-            <p>Acabado: Textura de la superficie lisa en todas sus caras.</p>
-            <p class="section-title">Dimensiones</p>
-            <p>Alto: 17,5 cm, Largo: 24 cm, Ancho: 9,5 cm, Peso: 2,6 Kg</p>
-            <p class="section-title">Rendimiento</p>
-            <p>4 Pzas/m2</p>
-            <p class="precio">Bs. 2.36</p>
-            <div class="quantity-container">
-                <button onclick="updateQuantity(-1, 'quantityCaida')">-</button>
-                <input type="text" id="quantityCaida" value="1" min="1">
-                <button onclick="updateQuantity(1, 'quantityCaida')">+</button>
-                <button class="add-to-cart-btn">Comprar!</button>
+        <!-- Producto 4: Ladrillo Bota Agua Dos Caídas -->
+        <div class="catalogo-item">
+            <a href="img/Bota5.png" data-fancybox="gallery" data-caption="Ladrillo Bota Agua Dos Caídas">
+                <img src="img/Bota5.png" alt="Ladrillo Bota Agua Dos Caídas">
+            </a>
+            <div class="details">
+                <h2>Ladrillo Bota Agua Dos Caídas</h2>
+                <p class="section-title">Descripción</p>
+                <p>Cerámica rectangular con 5 huecos de diferentes tamaños en la cara frontal, liso en todas sus caras.</p>
+                <p class="section-title">Datos Físicos</p>
+                <p>Color: Terracota</p>
+                <p class="section-title">Dimensiones</p>
+                <p>Alto: 9.5 cm, Largo: 24.5 cm, Ancho: 24.5 cm</p>
+                <p class="precio">Bs. 2.30</p>
+                <form action="/catalogo/comprar" method="POST">
+                    <input type="hidden" name="idProducto" value="4">
+                    <div class="quantity-container">
+                        <button type="button" onclick="updateQuantity(-1, 'quantity16')">-</button>
+                        <input type="text" id="quantity16" name="cantidad" value="1" min="1">
+                        <button type="button" onclick="updateQuantity(1, 'quantity16')">+</button>
+                        <button type="button" class="add-to-cart-btn" onclick="comprarProducto(16, 'quantity16')">Comprar!</button>
+                    </div>
+                </form>
             </div>
         </div>
-    </div>
+ 
+        <!-- Producto 5: Bota Agua Una Caída -->
+        <div class="catalogo-item">
+            <a href="img/Caida.png" data-fancybox="gallery" data-caption="Bota Agua Una Caída">
+                <img src="img/Caida.png" alt="Bota Agua Una Caída">
+            </a>
+            <div class="details">
+                <h2>Bota Agua Una Caída</h2>
+                <p class="section-title">Descripción</p>
+                <p>Cerámica rectangular con 4 huecos de diferentes tamaños en la cara frontal, liso en todas sus caras.</p>
+                <p class="section-title">Datos Físicos</p>
+                <p>Color: Terracota</p>
+                <p class="section-title">Dimensiones</p>
+                <p>Alto: 17.5 cm, Largo: 24 cm, Ancho: 9.5 cm</p>
+                <p class="precio">Bs. 2.20</p>
+                <form action="/catalogo/comprar" method="POST">
+                    <input type="hidden" name="idProducto" value="5">
+                    <div class="quantity-container">
+                        <button type="button" onclick="updateQuantity(-1, 'quantity4')">-</button>
+                        <input type="text" id="quantity4" name="cantidad" value="1" min="1">
+                        <button type="button" onclick="updateQuantity(1, 'quantity4')">+</button>
+                        <button type="button" class="add-to-cart-btn" onclick="comprarProducto(4, 'quantity4')">Comprar!</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+ 
+        <!-- Producto 6: Ladrillo Pavic -->
+        <div class="catalogo-item">
+            <a href="img/Pavic.png" data-fancybox="gallery" data-caption="Ladrillo Pavic">
+                <img src="img/Pavic.png" alt="Ladrillo Pavic">
+            </a>
+            <div class="details">
+                <h2>Ladrillo Pavic</h2>
+                <p class="section-title">Descripción</p>
+                <p>Pieza cerámica para acabados que demandan resistencias y durabilidad altas, rústico por sus cuatro caras.</p>
+                <p class="section-title">Datos Físicos</p>
+                <p>Color: Naranja</p>
+                <p class="section-title">Dimensiones</p>
+                <p>Alto: 4.5 cm, Largo: 20 cm, Ancho: 10 cm</p>
+                <p class="precio">Bs. 2.00</p>
+                <form action="/catalogo/comprar" method="POST">
+                    <input type="hidden" name="idProducto" value="6">
+                    <div class="quantity-container">
+                        <button type="button" onclick="updateQuantity(-1, 'quantity12')">-</button>
+                        <input type="text" id="quantity12" name="cantidad" value="1" min="1">
+                        <button type="button" onclick="updateQuantity(1, 'quantity12')">+</button>
+                        <button type="button" class="add-to-cart-btn" onclick="comprarProducto(12, 'quantity12')">Comprar!</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+ 
     </div>
  
     <!-- Footer -->
@@ -414,22 +439,27 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         Fancybox.bind("[data-fancybox='gallery']", {
-            Toolbar: {
-                display: ["zoom", "download", "fullscreen", "close"],
-            },
-            Image: {
-                zoom: true,
-            }
+            Toolbar: { display: ["zoom", "download", "fullscreen", "close"] },
+            Image: { zoom: true }
         });
- 
+
+        function comprarProducto(idProducto, inputCantidadId) {
+        const cantidad = document.getElementById(inputCantidadId).value;
+        if (cantidad < 1) {
+            alert('Por favor, seleccione una cantidad válida.');
+            return;
+        }
+        // Redirige a la ruta ventas/create con los parámetros producto_id y cantidad
+        window.location.href = `/ventas/create?producto_id=${idProducto}&cantidad=${cantidad}`;
+        }
+
+        window.location.href = `/ventas/create?producto_id=${idProducto}&cantidad=${cantidad}`;
         function updateQuantity(amount, inputId) {
             const input = document.getElementById(inputId);
             let currentValue = parseInt(input.value);
             if (isNaN(currentValue)) currentValue = 1;
- 
             let newValue = currentValue + amount;
             if (newValue < 1) newValue = 1;
- 
             input.value = newValue;
         }
  

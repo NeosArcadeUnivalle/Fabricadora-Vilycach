@@ -115,6 +115,7 @@
     }
 </script>
 <div class="container">
+    <br>
         <h1>Lista de Materias Primas y Proveedores</h1>
 
         <!-- Formulario de búsqueda -->

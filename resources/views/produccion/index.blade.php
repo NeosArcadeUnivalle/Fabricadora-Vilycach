@@ -115,6 +115,7 @@
     }
 </script>
 <div class="container">
+    <br>
         <h2>Lista de Producción</h2>
 
         <!-- Formulario de búsqueda -->

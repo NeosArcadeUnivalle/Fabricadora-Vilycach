@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+    <br>
     <h1>Agregar Empleado</h1>
     <form action="{{ route('empleados.store') }}" method="POST">
         @csrf
@@ -42,25 +43,38 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelector('input[name="nombre"]').addEventListener('input', function (event) {
-            event.target.value = event.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '').substring(0, 100);
+            event.target.value = event.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '').substring(0, 35);
         });
         document.querySelector('input[name="apellido"]').addEventListener('input', function (event) {
-            event.target.value = event.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '').substring(0, 100);
+            event.target.value = event.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '').substring(0, 35);
         });
-        document.querySelector('input[name="correoElectronico"]').setAttribute('maxlength', '100');
+        document.querySelector('input[name="correoElectronico"]').setAttribute('maxlength', '35');
         document.querySelector('input[name="password"]').setAttribute('minlength', '8');
         document.querySelector('input[name="puesto"]').addEventListener('input', function (event) {
-            event.target.value = event.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '').substring(0, 50);
+            event.target.value = event.target.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '').substring(0, 35);
         });
         const fechaContratacionInput = document.querySelector('input[name="fechaContratacion"]');
         const today = new Date();
         const formattedToday = today.toISOString().split('T')[0];
+        
+        // Fecha máxima es hoy
         fechaContratacionInput.setAttribute('max', formattedToday);
+
+        // Fecha mínima es 50 años atrás
+        const fiftyYearsAgo = new Date();
+        fiftyYearsAgo.setFullYear(today.getFullYear() - 50);
+        const formattedFiftyYearsAgo = fiftyYearsAgo.toISOString().split('T')[0];
+        fechaContratacionInput.setAttribute('min', formattedFiftyYearsAgo);
+
+        // Validación adicional en el evento 'input'
         fechaContratacionInput.addEventListener('input', function (event) {
             const selectedDate = new Date(event.target.value);
             if (selectedDate > today) {
                 alert('La fecha de contratación no puede ser futura. Se ajustará a la fecha de hoy.');
-                event.target.value = formattedToday; 
+                event.target.value = formattedToday;
+            } else if (selectedDate < fiftyYearsAgo) {
+                alert('La fecha de contratación no puede ser anterior a 50 años. Se ajustará a la fecha mínima permitida.');
+                event.target.value = formattedFiftyYearsAgo;
             }
         });
     });

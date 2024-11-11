@@ -28,7 +28,6 @@
 
                 <button type="submit">Iniciar Sesión</button>
             </form>
-            <!-- Botón para regresar al home -->
             <button @click="goToHome" class="back-btn">Regresar</button>
         </div>
     </div>
@@ -42,8 +41,9 @@ export default {
         return {
             correoElectronico: '',
             password: '',
-            showPassword: false, // Estado para controlar la visibilidad de la contraseña
+            showPassword: false,
             errors: [],
+            historyInterval: null,
         };
     },
     methods: {
@@ -51,15 +51,14 @@ export default {
             this.showPassword = !this.showPassword;
         },
         loginEmpleado() {
-            this.errors = []; // Limpiar errores previos
-
+            this.errors = [];
             axios.post('/empleado/login', {
                 correoElectronico: this.correoElectronico,
                 password: this.password,
             })
             .then(response => {
                 if (response.data.redirect) {
-                    window.location.href = response.data.redirect; // Redirige a productos si el login es exitoso
+                    window.location.href = response.data.redirect;
                 }
             })
             .catch(error => {
@@ -71,9 +70,32 @@ export default {
             });
         },
         goToHome() {
-            window.location.href = '/'; // Redirige al home
+            window.location.href = '/';
+        },
+        preventBackNavigation() {
+            // Fuerza una actualización inmediata del historial
+            history.pushState(null, null, location.href);
+            window.addEventListener("popstate", () => {
+                history.pushState(null, null, location.href);
+                alert("No puedes retroceder en esta página.");
+            });
+        },
+        maintainHistoryPosition() {
+            // Ajusta el intervalo a un valor rápido para reducir la latencia
+            this.historyInterval = setInterval(() => {
+                history.pushState(null, null, location.href);
+            }, 100);
         }
-    }
+    },
+    mounted() {
+        this.preventBackNavigation();
+        this.maintainHistoryPosition();
+    },
+    beforeDestroy() {
+        if (this.historyInterval) {
+            clearInterval(this.historyInterval);
+        }
+    },
 };
 </script>
 
