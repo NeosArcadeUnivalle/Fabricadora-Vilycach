@@ -8,6 +8,7 @@
             </div>
             <div class="navbar-right">
                 <ul class="navbar-links">
+                    <li><a :href="routes.bi">ANÁLISIS</a></li>
                     <li><a :href="routes.empleados">EMPLEADOS</a></li>
                     <li><a :href="routes.productos">PRODUCTOS</a></li>
                     <li><a :href="routes.produccion">PRODUCCIÓN</a></li>
@@ -28,6 +29,7 @@ export default {
             isAuthenticated: false,
             shouldHideNavbar: false,
             routes: {
+                bi: '/bi',
                 empleados: '/empleados',
                 productos: '/productos',
                 produccion: '/produccion',

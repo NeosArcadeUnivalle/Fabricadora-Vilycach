@@ -5,6 +5,9 @@ use App\Http\Controllers\EmpleadoAuthController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\CatalogoController;
+use App\Http\Controllers\BIController;
+
+Route::get('/bi', [BIController::class, 'index'])->name('bi.index');
 
 // Rutas para las vistas
 Route::resource('empleados', EmpleadoController::class);

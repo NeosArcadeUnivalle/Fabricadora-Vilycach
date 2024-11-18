@@ -139,6 +139,7 @@
         <i class="fa fa-bell"></i>
         <span class="badge">{{ $notificacionesNoVistas }}</span>
     </a>
+    <br>
     <h1>Lista de Ventas</h1>
     <!-- Filtro de búsqueda -->
     <div class="mb-3">
