@@ -2,8 +2,7 @@
 
 @section('content')
 <style>
-    /* Variables de color */
-    :root {
+        :root {
         --primary-color: #f4f4f4; /* Fondo claro */
         --secondary-color: #b22222; /* Rojo oscuro */
         --hover-color: #8b0000; /* Hover */
@@ -106,133 +105,153 @@
             margin-bottom: 10px;
         }
     }
-
-    /* Contenedor del gráfico */
+    /* Estilos generales */
     .chart-container {
-        position: relative;
-        margin: auto;
+        margin: 20px auto;
         padding: 20px;
-        background-color: var(--chart-bg-color);
+        background: #f4f4f4;
         border-radius: 10px;
-        box-shadow: 0px 4px 8px var(--shadow-color);
-        width: 90%;
-        max-width: 1000px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        max-width: 90%;
         text-align: center;
     }
 
-    /* Título del gráfico */
-    h1 {
-        color: var(--secondary-color);
-        font-size: 2.5em;
-        margin-bottom: 20px;
+    .chart-title {
+        font-size: 1.8em;
         font-weight: bold;
-        text-shadow: 1px 1px 3px var(--shadow-color);
-    }
-
-    /* Ajustes generales */
-    body {
-        background-color: #f9f9f9;
+        color: #b22222;
+        margin-bottom: 10px;
     }
 
     .chart-legend {
-        font-size: 14px;
-        color: var(--text-color);
+        font-size: 0.9em;
+        color: #666;
         margin-top: 10px;
+    }
+
+    .chart-description {
+        font-size: 0.85em;
+        color: #666;
+        margin-top: 15px;
+    }
+
+    /* Ajuste del gráfico circular */
+    .chart-container-pie {
+        max-width: 600px;
+        margin: 0 auto 20px;
     }
 </style>
 
-<!-- Script para el toggle del menú en móvil -->
-<script>
-    function toggleNavbar() {
-        const links = document.querySelector('.navbar-links');
-        links.classList.toggle('active');
-    }
-</script>
-
 <div class="container mt-5">
+    <!-- Gráfico 1 -->
     <div class="chart-container">
-        <h1 class="text-center">Productos más solicitados</h1>
-        <canvas id="productosChart"></canvas>
-        <div class="chart-legend">
-            <p>Este gráfico muestra los productos más solicitados por los clientes, incluyendo su tipo de ladrillo.</p>
-        </div>
+        <h2 class="chart-title">Productos Más Vendidos Según La Cantidad</h2>
+        <canvas id="productosMasVendidosChart"></canvas>
+        <p class="chart-description">Este gráfico muestra los productos más vendidos según la cantidad total adquirida por los clientes, clasificando por tipo de ladrillo.</p>
+    </div>
+
+    <!-- Gráfico 2 -->
+    <div class="chart-container">
+        <h2 class="chart-title">Solicitudes de Productos</h2>
+        <canvas id="productosMasSolicitadosChart"></canvas>
+        <p class="chart-description">Este gráfico ilustra el número de solicitudes realizadas para cada tipo de producto, agrupando por su categoría.</p>
+    </div>
+
+    <!-- Gráfico 3 -->
+    <div class="chart-container chart-container-pie">
+        <h2 class="chart-title">Ciudades con Mayor Cantidad de Solicitudes</h2>
+        <canvas id="ciudadesChart"></canvas>
+        <p class="chart-description">Este gráfico muestra las ciudades desde las cuales se realizan la mayor cantidad de solicitudes de compra.</p>
     </div>
 </div>
 
-<!-- Agregar Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // Obtener los datos del backend
-    const productos = @json($productosMasVendidos->map(function($item) {
+    // Gráfico 1: Productos Más Vendidos
+    const productosVendidos = @json($productosMasVendidos->map(function($item) {
         return "{$item->nombreProducto} ({$item->tipoLadrillo})";
-    })->values());
-    const cantidades = @json($productosMasVendidos->pluck('cantidad'));
+    }));
+    const cantidadesVendidas = @json($productosMasVendidos->pluck('cantidad_total'));
 
-    // Configurar el gráfico
-    const ctx = document.getElementById('productosChart').getContext('2d');
-    const productosChart = new Chart(ctx, {
+    new Chart(document.getElementById('productosMasVendidosChart').getContext('2d'), {
         type: 'bar',
         data: {
-            labels: productos,
+            labels: productosVendidos,
             datasets: [{
-                label: 'Cantidad de solicitudes',
-                data: cantidades,
-                backgroundColor: 'var(--chart-bar-color)',
-                hoverBackgroundColor: 'var(--chart-bar-hover-color)',
-                borderColor: 'rgba(0, 0, 0, 0.1)',
+                label: 'Cantidad Vendida',
+                data: cantidadesVendidas,
+                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                hoverBackgroundColor: 'rgba(75, 192, 192, 0.8)',
                 borderWidth: 1,
-                borderRadius: 5,
                 barThickness: 50
             }]
         },
         options: {
             responsive: true,
-            maintainAspectRatio: true,
             plugins: {
                 legend: {
                     display: true,
-                    position: 'top',
-                    labels: {
-                        font: {
-                            size: 14
-                        },
-                        color: 'var(--text-color)'
-                    }
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return `Cantidad: ${context.raw}`;
-                        }
-                    }
+                    position: 'top'
                 }
-            },
-            layout: {
-                padding: 20
-            },
-            scales: {
-                x: {
-                    ticks: {
-                        color: 'var(--text-color)',
-                        font: {
-                            size: 14
-                        }
-                    },
-                    grid: {
-                        display: false
-                    }
-                },
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        color: 'var(--text-color)',
-                        font: {
-                            size: 14
-                        }
-                    },
-                    grid: {
-                        color: 'rgba(0, 0, 0, 0.1)'
-                    }
+            }
+        }
+    });
+
+    // Gráfico 2: Solicitudes de Productos
+    const productosSolicitados = @json($productosMasSolicitados->map(function($item) {
+        return "{$item->nombreProducto} ({$item->tipoLadrillo})";
+    }));
+    const solicitudes = @json($productosMasSolicitados->pluck('solicitudes'));
+
+    new Chart(document.getElementById('productosMasSolicitadosChart').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: productosSolicitados,
+            datasets: [{
+                label: 'Solicitudes',
+                data: solicitudes,
+                backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                hoverBackgroundColor: 'rgba(153, 102, 255, 0.8)',
+                borderWidth: 1,
+                barThickness: 50
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top'
+                }
+            }
+        }
+    });
+
+    // Gráfico 3: Ciudades con Mayor Solicitudes
+    const ciudades = @json($ciudadesMasSolicitadas->pluck('ciudad'));
+    const solicitudesCiudades = @json($ciudadesMasSolicitadas->pluck('cantidad'));
+
+    new Chart(document.getElementById('ciudadesChart').getContext('2d'), {
+        type: 'pie',
+        data: {
+            labels: ciudades,
+            datasets: [{
+                data: solicitudesCiudades,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(75, 192, 192, 0.5)',
+                    'rgba(153, 102, 255, 0.5)'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top'
                 }
             }
         }

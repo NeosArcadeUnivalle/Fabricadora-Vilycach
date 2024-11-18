@@ -137,7 +137,7 @@ class VentaController extends Controller
         ]);        
         $this->registrarNotificacion($cliente, $producto, $cantidad);
         if ($venta) {
-            return redirect()->back()->with('success', 'Venta registrada exitosamente, espera a que un encargado se comunique con usted.');
+            return redirect()->back()->with('success', 'Compra registrada exitosamente, espera a que un encargado se comunique con usted.');
         } else {
             return redirect()->back()->with('error', 'Hubo un problema al registrar la venta.');
         }
