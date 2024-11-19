@@ -39,9 +39,12 @@ class EmpleadoAuthController extends Controller
     
 
     // Cerrar sesión
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
-        return redirect('/');
-    }
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+    
+        return response()->json(['message' => 'Logout successful'], 200);
+    }    
 }

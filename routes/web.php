@@ -6,50 +6,53 @@ use App\Http\Controllers\VentaController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\CatalogoController;
 use App\Http\Controllers\BIController;
+use App\Http\Middleware\CheckAuth;
 
-Route::get('/bi', [BIController::class, 'index'])->name('bi.index');
-
-// Rutas para las vistas
-Route::resource('empleados', EmpleadoController::class);
-Route::resource('productos', App\Http\Controllers\ProductoController::class);
-Route::resource('produccion', App\Http\Controllers\ProduccionController::class);
-Route::resource('materiaprima', App\Http\Controllers\MateriaPrimaController::class);
-
-// Ruta para la vista principal
-Route::get('/', function () {
-    return view('main.index');  // Apunta a la vista 'resources/views/main/index.blade.php'
-});
-
-// Rutas de autenticación para empleados
+// Rutas sin autenticación (Login, Logout y Página Principal)
 Route::get('empleado/login', [EmpleadoAuthController::class, 'showLoginForm'])->name('empleado.login.form');
 Route::post('empleado/login', [EmpleadoAuthController::class, 'login'])->name('empleado.login');
 Route::post('empleado/logout', [EmpleadoAuthController::class, 'logout'])->name('empleado.logout');
+Route::get('/', function () {
+    return view('main.index');
+});
 
-// Rutas para las ventas
-Route::get('/ventas', [VentaController::class, 'index'])->name('ventas.index');
-Route::get('/ventas/create', [VentaController::class, 'create'])->name('ventas.create');
+// Rutas protegidas con middleware
+Route::middleware(CheckAuth::class)->group(function () {
+    // BI (Análisis)
+    Route::get('/bi', [BIController::class, 'index'])->name('bi.index');
+
+    // Gestión de Empleados
+    Route::resource('empleados', EmpleadoController::class);
+
+    // Gestión de Productos
+    Route::resource('productos', App\Http\Controllers\ProductoController::class);
+
+    // Gestión de Producción
+    Route::resource('produccion', App\Http\Controllers\ProduccionController::class);
+
+    // Gestión de Materia Prima
+    Route::resource('materiaprima', App\Http\Controllers\MateriaPrimaController::class);
+
+    // Gestión de Ventas
+    Route::get('/ventas', [VentaController::class, 'index'])->name('ventas.index');
+    Route::get('/ventas/{id}/edit', [VentaController::class, 'edit'])->name('ventas.edit');
+    Route::put('/ventas/{id}', [VentaController::class, 'update'])->name('ventas.update');
+    Route::put('/ventas/{id}/updateEstado', [VentaController::class, 'updateEstado'])->name('ventas.updateEstado');
+    Route::delete('/ventas/{id}', [VentaController::class, 'destroy'])->name('ventas.destroy');
+
+    // Notificaciones
+    Route::get('/notificaciones', [VentaController::class, 'verNotificaciones'])->name('notificaciones.index');
+    Route::post('/notificaciones/marcar-vistas', [VentaController::class, 'marcarNotificacionesVistas'])->name('notificaciones.marcarVistas');
+});
 Route::post('/ventas', [VentaController::class, 'store'])->name('ventas.store');
-Route::get('/ventas/{id}/edit', [VentaController::class, 'edit'])->name('ventas.edit');
-Route::put('/ventas/{id}', [VentaController::class, 'update'])->name('ventas.update');
-Route::put('/ventas/{id}/updateEstado', [VentaController::class, 'updateEstado'])->name('ventas.updateEstado');
-Route::delete('/ventas/{id}', [VentaController::class, 'destroy'])->name('ventas.destroy');
-
-// Ruta para obtener las ventas en JSON, usada en el componente Vue
-Route::get('/api/ventas', [VentaController::class, 'getVentas'])->name('api.ventas.index');
-
-// Rutas de autenticación predeterminadas de Laravel
+Route::get('/ventas/create', [VentaController::class, 'create'])->name('ventas.create');
+// Catálogo
+Route::get('/catalogo', [CatalogoController::class, 'index']);
+// Rutas de autenticación predeterminadas
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Ruta de API para obtener empleados en JSON (solo para referencia)
-Route::get('/api/empleados', [EmpleadoController::class, 'getEmpleados']);
-Route::delete('/empleados/{id}', [EmpleadoController::class, 'destroy'])->name('empleados.destroy');
-
-Route::get('/catalogo', [CatalogoController::class, 'index']);
-
-Route::get('/notificaciones', [VentaController::class, 'verNotificaciones'])->name('notificaciones.index');
-Route::post('/notificaciones/marcar-vistas', [VentaController::class, 'marcarNotificacionesVistas'])->name('notificaciones.marcarVistas');
-
+// Ruta de fallback (404)
 Route::fallback(function () {
     return response()->view('errors.404', [], 404);
 });

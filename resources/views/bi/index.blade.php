@@ -2,7 +2,7 @@
 
 @section('content')
 <style>
-        :root {
+    :root {
         --primary-color: #f4f4f4; /* Fondo claro */
         --secondary-color: #b22222; /* Rojo oscuro */
         --hover-color: #8b0000; /* Hover */
@@ -105,28 +105,23 @@
             margin-bottom: 10px;
         }
     }
-    /* Estilos generales */
+
+    /* General styles for charts */
     .chart-container {
         margin: 20px auto;
         padding: 20px;
-        background: #f4f4f4;
+        background: var(--primary-color);
         border-radius: 10px;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        max-width: 90%;
+        max-width: 80%;
         text-align: center;
     }
 
     .chart-title {
         font-size: 1.8em;
         font-weight: bold;
-        color: #b22222;
+        color: var(--secondary-color);
         margin-bottom: 10px;
-    }
-
-    .chart-legend {
-        font-size: 0.9em;
-        color: #666;
-        margin-top: 10px;
     }
 
     .chart-description {
@@ -135,8 +130,14 @@
         margin-top: 15px;
     }
 
-    /* Ajuste del gráfico circular */
+    /* Specific styles for pie chart */
     .chart-container-pie {
+        max-width: 500px;
+        margin: 0 auto 20px;
+    }
+
+    /* Specific styles for radar chart */
+    .chart-container-radar {
         max-width: 600px;
         margin: 0 auto 20px;
     }
@@ -145,16 +146,16 @@
 <div class="container mt-5">
     <!-- Gráfico 1 -->
     <div class="chart-container">
-        <h2 class="chart-title">Productos Más Vendidos Según La Cantidad</h2>
+        <h2 class="chart-title">Productos Más Vendidos por Cantidad</h2>
         <canvas id="productosMasVendidosChart"></canvas>
-        <p class="chart-description">Este gráfico muestra los productos más vendidos según la cantidad total adquirida por los clientes, clasificando por tipo de ladrillo.</p>
+        <p class="chart-description">Este gráfico muestra los productos más vendidos junto con su tipo, basado en la cantidad total adquirida por los clientes.</p>
     </div>
 
     <!-- Gráfico 2 -->
     <div class="chart-container">
-        <h2 class="chart-title">Solicitudes de Productos</h2>
+        <h2 class="chart-title">Solicitudes de Productos por Tipo</h2>
         <canvas id="productosMasSolicitadosChart"></canvas>
-        <p class="chart-description">Este gráfico ilustra el número de solicitudes realizadas para cada tipo de producto, agrupando por su categoría.</p>
+        <p class="chart-description">Este gráfico ilustra el número de solicitudes realizadas para cada producto junto con su tipo.</p>
     </div>
 
     <!-- Gráfico 3 -->
@@ -163,14 +164,26 @@
         <canvas id="ciudadesChart"></canvas>
         <p class="chart-description">Este gráfico muestra las ciudades desde las cuales se realizan la mayor cantidad de solicitudes de compra.</p>
     </div>
+
+    <!-- Gráfico 4 -->
+    <div class="chart-container chart-container-radar">
+        <h2 class="chart-title">Ventas por Categoría de Producto</h2>
+        <canvas id="ventasPorCategoriaChart"></canvas>
+        <p class="chart-description">Este gráfico representa las ventas totales por categoría de producto (tipo de ladrillo).</p>
+    </div>
+
+    <!-- Gráfico 5 -->
+    <div class="chart-container">
+        <h2 class="chart-title">Ingresos Totales por Mes</h2>
+        <canvas id="ingresosPorMesChart"></canvas>
+        <p class="chart-description">Este gráfico muestra los ingresos totales generados mes a mes.</p>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     // Gráfico 1: Productos Más Vendidos
-    const productosVendidos = @json($productosMasVendidos->map(function($item) {
-        return "{$item->nombreProducto} ({$item->tipoLadrillo})";
-    }));
+    const productosVendidos = @json($productosMasVendidos->pluck('nombreProducto'));
     const cantidadesVendidas = @json($productosMasVendidos->pluck('cantidad_total'));
 
     new Chart(document.getElementById('productosMasVendidosChart').getContext('2d'), {
@@ -189,18 +202,13 @@
         options: {
             responsive: true,
             plugins: {
-                legend: {
-                    display: true,
-                    position: 'top'
-                }
+                legend: { display: true, position: 'top' }
             }
         }
     });
 
     // Gráfico 2: Solicitudes de Productos
-    const productosSolicitados = @json($productosMasSolicitados->map(function($item) {
-        return "{$item->nombreProducto} ({$item->tipoLadrillo})";
-    }));
+    const productosSolicitados = @json($productosMasSolicitados->pluck('nombreProducto'));
     const solicitudes = @json($productosMasSolicitados->pluck('solicitudes'));
 
     new Chart(document.getElementById('productosMasSolicitadosChart').getContext('2d'), {
@@ -219,15 +227,12 @@
         options: {
             responsive: true,
             plugins: {
-                legend: {
-                    display: true,
-                    position: 'top'
-                }
+                legend: { display: true, position: 'top' }
             }
         }
     });
 
-    // Gráfico 3: Ciudades con Mayor Solicitudes
+    // Gráfico 3: Ciudades con Más Solicitudes
     const ciudades = @json($ciudadesMasSolicitadas->pluck('ciudad'));
     const solicitudesCiudades = @json($ciudadesMasSolicitadas->pluck('cantidad'));
 
@@ -249,10 +254,61 @@
         options: {
             responsive: true,
             plugins: {
-                legend: {
-                    display: true,
-                    position: 'top'
-                }
+                legend: { display: true, position: 'top' }
+            }
+        }
+    });
+
+    // Gráfico 4: Ventas por Categoría
+    const categorias = @json($ventasPorCategoria->pluck('tipoLadrillo'));
+    const ventasTotales = @json($ventasPorCategoria->pluck('total_ventas'));
+
+    new Chart(document.getElementById('ventasPorCategoriaChart').getContext('2d'), {
+        type: 'radar',
+        data: {
+            labels: categorias,
+            datasets: [{
+                label: 'Total Ventas',
+                data: ventasTotales,
+                borderColor: 'rgba(255, 99, 132, 0.8)',
+                backgroundColor: 'rgba(255, 99, 132, 0.3)',
+                pointBackgroundColor: 'rgba(255, 99, 132, 0.8)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgba(255, 99, 132, 0.8)',
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: true, position: 'top' }
+            }
+        }
+    });
+
+    // Gráfico 5: Ingresos por Mes
+    const meses = @json($ingresosPorMes->pluck('mes'));
+    const ingresos = @json($ingresosPorMes->pluck('ingresos_totales'));
+
+    new Chart(document.getElementById('ingresosPorMesChart').getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: meses,
+            datasets: [{
+                label: 'Ingresos Totales',
+                data: ingresos,
+                borderColor: 'rgba(255, 99, 132, 0.8)',
+                backgroundColor: 'rgba(255, 99, 132, 0.3)',
+                fill: true,
+                borderWidth: 2,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: true, position: 'top' }
             }
         }
     });
