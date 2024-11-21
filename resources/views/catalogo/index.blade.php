@@ -255,8 +255,8 @@
     <h1>Catálogo de Productos</h1>
     <div class="catalogo-container">
         <div class="catalogo-item">
-            <a href="img/Rayado6.png" data-fancybox="gallery" data-caption="Ladrillo Rayado">
-                <img src="img/Rayado6.png" alt="Ladrillo Rayado">
+            <a href="img/Rayado Blanco.png" data-fancybox="gallery" data-caption="Ladrillo Rayado">
+                <img src="img/Rayado Blanco.png" alt="Ladrillo Rayado">
             </a>
             <div class="details">
                 <h2>Ladrillo Rayado</h2>
@@ -279,8 +279,8 @@
             </div>
         </div>
         <div class="catalogo-item">
-            <a href="img/Liso6.png" data-fancybox="gallery" data-caption="Ladrillo Liso">
-                <img src="img/Liso6.png" alt="Ladrillo Liso">
+            <a href="img/Liso Blanco.png" data-fancybox="gallery" data-caption="Ladrillo Liso">
+                <img src="img/Liso Blanco.png" alt="Ladrillo Liso">
             </a>
             <div class="details">
                 <h2>Ladrillo Liso</h2>
@@ -303,8 +303,8 @@
             </div>
         </div>
         <div class="catalogo-item">
-            <a href="img/Gambote18.png" data-fancybox="gallery" data-caption="Ladrillo Gambote">
-                <img src="img/Gambote18.png" alt="Ladrillo Gambote">
+            <a href="img/Gambote Blanco.png" data-fancybox="gallery" data-caption="Ladrillo Gambote">
+                <img src="img/Gambote Blanco.png" alt="Ladrillo Gambote">
             </a>
             <div class="details">
                 <h2>Ladrillo Gambote</h2>
@@ -327,8 +327,8 @@
             </div>
         </div>
         <div class="catalogo-item">
-            <a href="img/Bota5.png" data-fancybox="gallery" data-caption="Ladrillo Bota Agua Dos Caídas">
-                <img src="img/Bota5.png" alt="Ladrillo Bota Agua Dos Caídas">
+            <a href="img/Bota agua dos caidas blanco.png" data-fancybox="gallery" data-caption="Ladrillo Bota Agua Dos Caídas">
+                <img src="img/Bota agua dos caidas blanco.png" alt="Ladrillo Bota Agua Dos Caídas">
             </a>
             <div class="details">
                 <h2>Ladrillo Bota Agua Dos Caídas</h2>
@@ -351,8 +351,8 @@
             </div>
         </div>
         <div class="catalogo-item">
-            <a href="img/Caida.png" data-fancybox="gallery" data-caption="Bota Agua Una Caída">
-                <img src="img/Caida.png" alt="Bota Agua Una Caída">
+            <a href="img/Bota Agua Una Caida Blanco.png" data-fancybox="gallery" data-caption="Bota Agua Una Caída">
+                <img src="img/Bota Agua Una Caida Blanco.png" alt="Bota Agua Una Caída">
             </a>
             <div class="details">
                 <h2>Bota Agua Una Caída</h2>
@@ -375,8 +375,8 @@
             </div>
         </div>
         <div class="catalogo-item">
-            <a href="img/Pavic.png" data-fancybox="gallery" data-caption="Ladrillo Pavic">
-                <img src="img/Pavic.png" alt="Ladrillo Pavic">
+            <a href="img/Pavic Blanco.png" data-fancybox="gallery" data-caption="Ladrillo Pavic">
+                <img src="img/Pavic Blanco.png" alt="Ladrillo Pavic">
             </a>
             <div class="details">
                 <h2>Ladrillo Pavic</h2>
