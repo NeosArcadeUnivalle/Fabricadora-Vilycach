@@ -6,8 +6,6 @@
     <h1>Agregar Proveedor y Materia Prima</h1>
     <form action="{{ route('materiaprima.store') }}" method="POST">
         @csrf
-
-        <!-- Datos del proveedor -->
         <div class="form-group">
             <label for="nombreProveedor">Nombre del Proveedor</label>
             <input type="text" name="nombreProveedor" class="form-control" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" maxlength="100" title="Solo letras y hasta 100 caracteres">
@@ -20,8 +18,6 @@
             <label for="direccionProveedor">Dirección</label>
             <input type="text" name="direccionProveedor" class="form-control" required maxlength="255">
         </div>
-
-        <!-- Datos de la materia prima -->
         <div class="form-group">
             <label for="nombreMateriaPrima">Nombre de la Materia Prima</label>
             <input type="text" name="nombreMateriaPrima" class="form-control" required maxlength="100">
@@ -35,7 +31,6 @@
         <a href="{{ route('materiaprima.index') }}" class="btn btn-secondary">Regresar</a>
     </form>
 </div>
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelector('input[name="nombreProveedor"]').addEventListener('input', function (event) {

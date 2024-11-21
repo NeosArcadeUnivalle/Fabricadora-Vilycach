@@ -12,7 +12,6 @@ class ProduccionController extends Controller
     public function index(Request $request)
     {
         $query = Produccion::with('producto.tipoLadrillo', 'empleadoResponsable.persona');
-
         if ($request->filled('search')) {
             $search = $request->input('search');
             $query->whereHas('producto', function ($q) use ($search) {
@@ -49,13 +48,10 @@ class ProduccionController extends Controller
         $produccion->cantidadProducida = $request->cantidadProducida;
         $produccion->idProducto = $request->idProducto;
         $produccion->idEmpleadoResponsable = $request->idEmpleadoResponsable;
-
         $producto = Producto::find($request->idProducto);
         $producto->cantidadDisponible += $request->cantidadProducida;
         $producto->save();
-
         $produccion->save();
-
         return redirect()->route('produccion.index')->with('success', 'Producción creada correctamente');
     }
 

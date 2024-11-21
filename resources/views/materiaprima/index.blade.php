@@ -1,24 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-<!-- Estilos estilizados específicos para el navbar en esta vista -->
 <style>
-    /* Variables de color */
     :root {
-        --primary-color: #f4f4f4; /* Fondo claro para resaltar el logo */
-        --secondary-color: #b22222; /* Rojo oscuro para los textos */
-        --hover-color: #8b0000; /* Color de hover */
-        --text-color: #333; /* Color de texto principal */
+        --primary-color: #f4f4f4; 
+        --secondary-color: #b22222; 
+        --hover-color: #8b0000; 
+        --text-color: #333; 
     }
 
-    /* Contenedor del navbar */
     .navbar-container {
         width: 100%;
         background-color: var(--primary-color);
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     }
 
-    /* Navbar */
     .navbar {
         display: flex;
         justify-content: space-between;
@@ -30,7 +26,6 @@
         letter-spacing: 1px;
     }
 
-    /* Logo */
     .navbar-logo {
         display: flex;
         align-items: center;
@@ -43,7 +38,6 @@
         border-radius: 5px;
     }
 
-    /* Links del navbar */
     .navbar-links {
         display: flex;
         list-style: none;
@@ -68,7 +62,6 @@
         color: var(--primary-color);
     }
 
-    /* Botón toggle para dispositivos móviles */
     .navbar-toggle {
         display: none;
         font-size: 24px;
@@ -78,7 +71,6 @@
         cursor: pointer;
     }
 
-    /* Responsividad */
     @media (max-width: 768px) {
         .navbar-links {
             flex-direction: column;
@@ -107,7 +99,6 @@
     }
 </style>
 
-<!-- Script para el toggle del menú en móvil -->
 <script>
     function toggleNavbar() {
         const links = document.querySelector('.navbar-links');
@@ -117,16 +108,10 @@
 <div class="container">
     <br>
         <h1>Lista de Materias Primas y Proveedores</h1>
-
-        <!-- Formulario de búsqueda -->
         <form method="GET" action="{{ route('materiaprima.index') }}" class="form-inline mb-3">
             <input type="text" name="search" class="form-control" placeholder="Buscar proveedor o materia prima..." value="{{ request('search') }}" oninput="this.form.submit()">
         </form>
-
-        <!-- Botón para agregar materia prima y proveedor -->
         <a href="{{ route('materiaprima.create') }}" class="btn btn-primary mb-3">Agregar Materia Prima y Proveedor</a>
-
-        <!-- Tabla de materias primas y proveedores -->
         <table class="table">
             <thead>
                 <tr>
@@ -160,8 +145,6 @@
                 @endforeach
             </tbody>
         </table>
-
-        <!-- Paginación -->
         <div class="d-flex justify-content-center">
             {{ $materiasPrimas->links('pagination::bootstrap-4') }}
         </div>

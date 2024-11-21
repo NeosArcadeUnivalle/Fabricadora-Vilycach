@@ -77,7 +77,7 @@ export default {
     list-style: none;
     margin: 0;
     padding: 0;
-    align-items: center; /* Centra verticalmente todos los elementos */
+    align-items: center;
 }
 
 .navbar-links li {
@@ -108,7 +108,7 @@ export default {
     cursor: pointer;
     border-radius: 4px;
     transition: background 0.3s, color 0.3s;
-    margin: 0; /* Alineación perfecta con los demás enlaces */
+    margin: 0; 
 }
 
 .logout-btn:hover {

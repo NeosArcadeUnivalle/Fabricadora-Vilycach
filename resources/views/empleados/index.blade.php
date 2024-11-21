@@ -1,24 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-<!-- Estilos específicos para el navbar en esta vista -->
 <style>
-    /* Variables de color */
     :root {
-        --primary-color: #f4f4f4; /* Fondo claro */
-        --secondary-color: #b22222; /* Rojo oscuro */
-        --hover-color: #8b0000; /* Hover */
-        --text-color: #333; /* Color de texto */
+        --primary-color: #f4f4f4;
+        --secondary-color: #b22222; 
+        --hover-color: #8b0000; 
+        --text-color: #333; 
     }
 
-    /* Contenedor del navbar */
     .navbar-container {
         width: 100%;
         background-color: var(--primary-color);
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     }
 
-    /* Navbar */
     .navbar {
         display: flex;
         justify-content: space-between;
@@ -32,7 +28,6 @@
         margin: 0 auto;
     }
 
-    /* Logo */
     .navbar-logo {
         display: flex;
         align-items: center;
@@ -45,7 +40,6 @@
         border-radius: 5px;
     }
 
-    /* Links del navbar */
     .navbar-links {
         display: flex;
         gap: 15px;

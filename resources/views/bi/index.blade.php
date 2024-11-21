@@ -3,20 +3,18 @@
 @section('content')
 <style>
     :root {
-        --primary-color: #f4f4f4; /* Fondo claro */
-        --secondary-color: #b22222; /* Rojo oscuro */
-        --hover-color: #8b0000; /* Hover */
-        --text-color: #333; /* Color de texto */
+        --primary-color: #f4f4f4; 
+        --secondary-color: #b22222; 
+        --hover-color: #8b0000; 
+        --text-color: #333; 
     }
 
-    /* Contenedor del navbar */
     .navbar-container {
         width: 100%;
         background-color: var(--primary-color);
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     }
 
-    /* Navbar */
     .navbar {
         display: flex;
         justify-content: space-between;
@@ -30,7 +28,6 @@
         margin: 0 auto;
     }
 
-    /* Logo */
     .navbar-logo {
         display: flex;
         align-items: center;
@@ -43,7 +40,6 @@
         border-radius: 5px;
     }
 
-    /* Links del navbar */
     .navbar-links {
         display: flex;
         gap: 15px;
@@ -68,7 +64,6 @@
         color: var(--primary-color);
     }
 
-    /* Botón toggle para dispositivos móviles */
     .navbar-toggle {
         display: none;
         font-size: 24px;
@@ -78,7 +73,6 @@
         cursor: pointer;
     }
 
-    /* Responsividad */
     @media (max-width: 768px) {
         .navbar-links {
             flex-direction: column;
@@ -106,7 +100,6 @@
         }
     }
 
-    /* General styles for charts */
     .chart-container {
         margin: 20px auto;
         padding: 20px;
@@ -130,13 +123,11 @@
         margin-top: 15px;
     }
 
-    /* Specific styles for pie chart */
     .chart-container-pie {
         max-width: 500px;
         margin: 0 auto 20px;
     }
 
-    /* Specific styles for radar chart */
     .chart-container-radar {
         max-width: 600px;
         margin: 0 auto 20px;
@@ -144,35 +135,30 @@
 </style>
 
 <div class="container mt-5">
-    <!-- Gráfico 1 -->
     <div class="chart-container">
         <h2 class="chart-title">Productos Más Vendidos por Cantidad</h2>
         <canvas id="productosMasVendidosChart"></canvas>
         <p class="chart-description">Este gráfico muestra los productos más vendidos junto con su tipo, basado en la cantidad total adquirida por los clientes.</p>
     </div>
 
-    <!-- Gráfico 2 -->
     <div class="chart-container">
         <h2 class="chart-title">Solicitudes de Productos por Tipo</h2>
         <canvas id="productosMasSolicitadosChart"></canvas>
         <p class="chart-description">Este gráfico ilustra el número de solicitudes realizadas para cada producto junto con su tipo.</p>
     </div>
 
-    <!-- Gráfico 3 -->
     <div class="chart-container chart-container-pie">
         <h2 class="chart-title">Ciudades con Mayor Cantidad de Solicitudes</h2>
         <canvas id="ciudadesChart"></canvas>
         <p class="chart-description">Este gráfico muestra las ciudades desde las cuales se realizan la mayor cantidad de solicitudes de compra.</p>
     </div>
 
-    <!-- Gráfico 4 -->
     <div class="chart-container chart-container-radar">
         <h2 class="chart-title">Ventas por Categoría de Producto</h2>
         <canvas id="ventasPorCategoriaChart"></canvas>
         <p class="chart-description">Este gráfico representa las ventas totales por categoría de producto (tipo de ladrillo).</p>
     </div>
 
-    <!-- Gráfico 5 -->
     <div class="chart-container">
         <h2 class="chart-title">Ingresos Totales por Mes</h2>
         <canvas id="ingresosPorMesChart"></canvas>
@@ -182,7 +168,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // Gráfico 1: Productos Más Vendidos
     const productosVendidos = @json($productosMasVendidos->pluck('nombreProducto'));
     const cantidadesVendidas = @json($productosMasVendidos->pluck('cantidad_total'));
 
@@ -207,7 +192,6 @@
         }
     });
 
-    // Gráfico 2: Solicitudes de Productos
     const productosSolicitados = @json($productosMasSolicitados->pluck('nombreProducto'));
     const solicitudes = @json($productosMasSolicitados->pluck('solicitudes'));
 
@@ -232,7 +216,6 @@
         }
     });
 
-    // Gráfico 3: Ciudades con Más Solicitudes
     const ciudades = @json($ciudadesMasSolicitadas->pluck('ciudad'));
     const solicitudesCiudades = @json($ciudadesMasSolicitadas->pluck('cantidad'));
 
@@ -259,7 +242,6 @@
         }
     });
 
-    // Gráfico 4: Ventas por Categoría
     const categorias = @json($ventasPorCategoria->pluck('tipoLadrillo'));
     const ventasTotales = @json($ventasPorCategoria->pluck('total_ventas'));
 
@@ -287,7 +269,6 @@
         }
     });
 
-    // Gráfico 5: Ingresos por Mes
     const meses = @json($ingresosPorMes->pluck('mes'));
     const ingresos = @json($ingresosPorMes->pluck('ingresos_totales'));
 

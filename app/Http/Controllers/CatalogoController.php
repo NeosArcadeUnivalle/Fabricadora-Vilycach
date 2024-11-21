@@ -1,10 +1,10 @@
 <?php
- 
+
 namespace App\Http\Controllers;
- 
+
 use App\Models\Producto;
 use Illuminate\View\View;
- 
+
 class CatalogoController extends Controller
 {
     public function index(): View

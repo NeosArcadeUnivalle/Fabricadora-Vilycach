@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Hash;
 
 class EncryptEmployeePasswords extends Command
 {
-    // El nombre y la descripción del comando
     protected $signature = 'encrypt:employee-passwords';
     protected $description = 'Encripta todas las contraseñas de la tabla empleados si no están encriptadas';
 
@@ -19,11 +18,9 @@ class EncryptEmployeePasswords extends Command
 
     public function handle()
     {
-        // Obtener todas las filas de la tabla empleados
         $empleados = DB::table('empleados')->get();
 
         foreach ($empleados as $empleado) {
-            // Si el password no está encriptado, encriptarlo
             if (Hash::needsRehash($empleado->password)) {
                 DB::table('empleados')
                     ->where('idEmpleado', $empleado->idEmpleado)

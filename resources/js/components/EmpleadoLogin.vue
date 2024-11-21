@@ -73,7 +73,6 @@ export default {
             window.location.href = '/';
         },
         preventBackNavigation() {
-            // Fuerza una actualización inmediata del historial
             history.pushState(null, null, location.href);
             window.addEventListener("popstate", () => {
                 history.pushState(null, null, location.href);
@@ -81,7 +80,6 @@ export default {
             });
         },
         maintainHistoryPosition() {
-            // Ajusta el intervalo a un valor rápido para reducir la latencia
             this.historyInterval = setInterval(() => {
                 history.pushState(null, null, location.href);
             }, 100);
@@ -195,7 +193,6 @@ form button:hover {
     background-color: #8b0000;
 }
 
-/* Estilo para el botón de regresar */
 .back-btn {
     width: 100%;
     padding: 10px;

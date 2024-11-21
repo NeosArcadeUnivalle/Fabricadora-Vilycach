@@ -91,8 +91,6 @@
     </style>
 </head>
 <body>
-
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="/">
@@ -117,15 +115,11 @@
             </div>
         </div>
     </nav>
-
-    <!-- 404 Error Section -->
     <section class="error-section">
         <h1>Error 404</h1>
         <p>La página que buscas no se encuentra disponible. Por favor, revisa la URL o vuelve a la página principal.</p>
         <a href="/">Volver al Inicio</a>
     </section>
-
-    <!-- Footer -->
     <footer class="text-center">
         <div class="container py-4">
             <div class="footer-logo">Grupo Industrial Vilycach</div>
@@ -137,10 +131,8 @@
             </div>
         </div>
     </footer>
-
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/3288cf83f6.js" crossorigin="anonymous"></script>
-
 </body>
 </html>

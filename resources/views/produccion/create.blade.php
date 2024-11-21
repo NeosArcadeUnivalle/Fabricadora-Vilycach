@@ -49,21 +49,16 @@
     </form>
 </div>
 
-<!-- Scripts de validación -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const fechaInput = document.querySelector('input[name="fecha"]');
         const today = new Date();
         const oneYearAgo = new Date();
         oneYearAgo.setFullYear(today.getFullYear() - 1);
-
         const formattedToday = today.toISOString().split('T')[0];
         const formattedOneYearAgo = oneYearAgo.toISOString().split('T')[0];
-
-        // Establecer el rango de fecha permitido
         fechaInput.setAttribute('max', formattedToday);
         fechaInput.setAttribute('min', formattedOneYearAgo);
-
         fechaInput.addEventListener('change', function (event) {
             const selectedDate = new Date(event.target.value);
             if (selectedDate > today) {
@@ -74,11 +69,8 @@
                 event.target.value = formattedOneYearAgo;
             }
         });
-
         document.querySelector('input[name="cantidadProducida"]').addEventListener('input', function (event) {
             event.target.value = event.target.value.replace(/[^0-9.]/g, '').substring(0, 9);
-
-            // Permitir solo un punto decimal
             const parts = event.target.value.split('.');
             if (parts.length > 2) {
                 event.target.value = parts[0] + '.' + parts[1];
@@ -86,7 +78,6 @@
         });
     });
 </script>
-
 
 @if(session('success'))
     <script>

@@ -45,28 +45,23 @@
     });
 
     document.addEventListener('DOMContentLoaded', function () {
-        // Validación de caracteres para nombre del producto
         document.querySelector('input[name="nombreProducto"]').addEventListener('input', function (event) {
             event.target.value = event.target.value.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 35);
         });
 
-        // Validación de caracteres y límite de 7 para cantidad disponible
         document.querySelector('input[name="cantidadDisponible"]').addEventListener('input', function (event) {
             event.target.value = event.target.value.replace(/[^0-9.]/g, '').substring(0, 7);
         });
 
-        // Validación de caracteres y límite de 5 para precio
         document.querySelector('input[name="precio"]').addEventListener('input', function (event) {
             event.target.value = event.target.value.replace(/[^0-9.]/g, '').substring(0, 5);
 
-            // Permitir solo un punto decimal
             const parts = event.target.value.split('.');
             if (parts.length > 2) {
                 event.target.value = parts[0] + '.' + parts[1];
             }
         });
 
-        // Validación de caracteres para nuevo tipo de ladrillo
         document.querySelector('input[name="nuevoTipoLadrillo"]').addEventListener('input', function (event) {
             event.target.value = event.target.value.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 35);
         });

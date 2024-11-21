@@ -203,7 +203,6 @@
             z-index: 1000;
         }
  
-        /* Responsive adjustments */
         @media (max-width: 768px) {
             .catalogo-item {
                 flex-direction: column;
@@ -223,18 +222,16 @@
             }
         }
         .precio {
-        font-size: 26px; /* Aumenta el tamaño de la fuente */
+        font-size: 26px; 
         font-weight: bold;
         color: #e74c3c;
-        margin-top: 15px; /* Espacio superior */
-        margin-bottom: 15px; /* Espacio inferior */
-        text-align: left; /* Alineado a la izquierda */
+        margin-top: 15px; 
+        margin-bottom: 15px; 
+        text-align: left; 
         }
     </style>
 </head>
 <body>
- 
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center">
@@ -257,8 +254,6 @@
  
     <h1>Catálogo de Productos</h1>
     <div class="catalogo-container">
- 
-        <!-- Producto 1: Ladrillo Rayado -->
         <div class="catalogo-item">
             <a href="img/Rayado6.png" data-fancybox="gallery" data-caption="Ladrillo Rayado">
                 <img src="img/Rayado6.png" alt="Ladrillo Rayado">
@@ -273,7 +268,6 @@
                 <p>Alto: 15 cm, Largo: 25 cm, Ancho: 10 cm</p>
                 <p class="precio">Bs. 0.68</p>
                 <form action="/catalogo/comprar" method="POST">
-                   
                     <input type="hidden" name="idProducto" value="1">
                     <div class="quantity-container">
                         <button type="button" onclick="updateQuantity(-1, 'quantity13')">-</button>
@@ -284,8 +278,6 @@
                 </form>
             </div>
         </div>
- 
-        <!-- Producto 2: Ladrillo Liso -->
         <div class="catalogo-item">
             <a href="img/Liso6.png" data-fancybox="gallery" data-caption="Ladrillo Liso">
                 <img src="img/Liso6.png" alt="Ladrillo Liso">
@@ -310,8 +302,6 @@
                 </form>
             </div>
         </div>
- 
-        <!-- Producto 3: Ladrillo Gambote -->
         <div class="catalogo-item">
             <a href="img/Gambote18.png" data-fancybox="gallery" data-caption="Ladrillo Gambote">
                 <img src="img/Gambote18.png" alt="Ladrillo Gambote">
@@ -336,8 +326,6 @@
                 </form>
             </div>
         </div>
- 
-        <!-- Producto 4: Ladrillo Bota Agua Dos Caídas -->
         <div class="catalogo-item">
             <a href="img/Bota5.png" data-fancybox="gallery" data-caption="Ladrillo Bota Agua Dos Caídas">
                 <img src="img/Bota5.png" alt="Ladrillo Bota Agua Dos Caídas">
@@ -362,8 +350,6 @@
                 </form>
             </div>
         </div>
- 
-        <!-- Producto 5: Bota Agua Una Caída -->
         <div class="catalogo-item">
             <a href="img/Caida.png" data-fancybox="gallery" data-caption="Bota Agua Una Caída">
                 <img src="img/Caida.png" alt="Bota Agua Una Caída">
@@ -388,8 +374,6 @@
                 </form>
             </div>
         </div>
- 
-        <!-- Producto 6: Ladrillo Pavic -->
         <div class="catalogo-item">
             <a href="img/Pavic.png" data-fancybox="gallery" data-caption="Ladrillo Pavic">
                 <img src="img/Pavic.png" alt="Ladrillo Pavic">
@@ -414,10 +398,7 @@
                 </form>
             </div>
         </div>
- 
     </div>
- 
-    <!-- Footer -->
     <footer>
         <div class="container py-4">
             <div class="footer-logo">Grupo Industrial Vilycach</div>
@@ -429,11 +410,9 @@
             </div>
         </div>
     </footer>
- 
     <a href="#" class="scroll-to-top">
         <i class="fas fa-chevron-up"></i>
     </a>
- 
     <script src="https://kit.fontawesome.com/3288cf83f6.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4/dist/fancybox.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -449,7 +428,6 @@
             alert('Por favor, seleccione una cantidad válida.');
             return;
         }
-        // Redirige a la ruta ventas/create con los parámetros producto_id y cantidad
         window.location.href = `/ventas/create?producto_id=${idProducto}&cantidad=${cantidad}`;
         }
 
@@ -474,6 +452,5 @@
             });
         });
     </script>
- 
 </body>
 </html>

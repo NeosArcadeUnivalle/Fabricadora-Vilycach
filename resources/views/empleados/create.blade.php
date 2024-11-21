@@ -6,7 +6,6 @@
     <h1>Agregar Empleado</h1>
     <form action="{{ route('empleados.store') }}" method="POST">
         @csrf
-        <!-- Datos de la persona -->
         <div class="form-group">
             <label for="nombre">Nombre</label>
             <input type="text" name="nombre" class="form-control" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo letras y hasta 100 caracteres" maxlength="100">
@@ -15,8 +14,6 @@
             <label for="apellido">Apellido</label>
             <input type="text" name="apellido" class="form-control" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo letras y hasta 100 caracteres" maxlength="100">
         </div>
-
-        <!-- Datos del empleado -->
         <div class="form-group">
             <label for="correoElectronico">Correo Electrónico</label>
             <input type="email" name="correoElectronico" class="form-control" required maxlength="100">
@@ -56,17 +53,11 @@
         const fechaContratacionInput = document.querySelector('input[name="fechaContratacion"]');
         const today = new Date();
         const formattedToday = today.toISOString().split('T')[0];
-        
-        // Fecha máxima es hoy
         fechaContratacionInput.setAttribute('max', formattedToday);
-
-        // Fecha mínima es 50 años atrás
         const fiftyYearsAgo = new Date();
         fiftyYearsAgo.setFullYear(today.getFullYear() - 50);
         const formattedFiftyYearsAgo = fiftyYearsAgo.toISOString().split('T')[0];
         fechaContratacionInput.setAttribute('min', formattedFiftyYearsAgo);
-
-        // Validación adicional en el evento 'input'
         fechaContratacionInput.addEventListener('input', function (event) {
             const selectedDate = new Date(event.target.value);
             if (selectedDate > today) {

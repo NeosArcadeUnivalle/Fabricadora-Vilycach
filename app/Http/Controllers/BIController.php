@@ -10,7 +10,6 @@ class BiController extends Controller
 {
     public function index()
     {
-        // 1. Productos más vendidos
         $productosMasVendidos = DB::table('ventas')
             ->join('productos', 'ventas.idProducto', '=', 'productos.idProducto')
             ->join('tiposladrillos', 'productos.idTipoLadrillo', '=', 'tiposladrillos.idTipoLadrillos')
@@ -22,7 +21,6 @@ class BiController extends Controller
             ->orderBy('cantidad_total', 'desc')
             ->get();
 
-        // 2. Solicitudes por producto
         $productosMasSolicitados = DB::table('ventas')
             ->join('productos', 'ventas.idProducto', '=', 'productos.idProducto')
             ->join('tiposladrillos', 'productos.idTipoLadrillo', '=', 'tiposladrillos.idTipoLadrillos')
@@ -34,7 +32,6 @@ class BiController extends Controller
             ->orderBy('solicitudes', 'desc')
             ->get();
 
-        // 3. Ciudades con más solicitudes
         $ciudadesMasSolicitadas = DB::table('ventas')
             ->join('lugaresdeventa', 'ventas.idLugarVenta', '=', 'lugaresdeventa.idLugarVenta')
             ->select(
@@ -45,7 +42,6 @@ class BiController extends Controller
             ->orderBy('cantidad', 'desc')
             ->get();
 
-        // 4. Ventas por categoría
         $ventasPorCategoria = DB::table('ventas')
             ->join('productos', 'ventas.idProducto', '=', 'productos.idProducto')
             ->join('tiposladrillos', 'productos.idTipoLadrillo', '=', 'tiposladrillos.idTipoLadrillos')
@@ -57,7 +53,6 @@ class BiController extends Controller
             ->orderBy('total_ventas', 'desc')
             ->get();
 
-        // 5. Ingresos totales por mes
         $ingresosPorMes = DB::table('ventas')
             ->select(
                 DB::raw('DATE_FORMAT(ventas.fecha, "%Y-%m") as mes'),
@@ -67,7 +62,6 @@ class BiController extends Controller
             ->orderBy('mes', 'asc')
             ->get();
 
-        // Retornar los datos a la vista
         return view('bi.index', compact(
             'productosMasVendidos',
             'productosMasSolicitados',

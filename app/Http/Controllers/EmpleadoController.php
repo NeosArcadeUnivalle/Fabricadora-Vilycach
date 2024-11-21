@@ -12,8 +12,6 @@ class EmpleadoController extends Controller
     public function index(Request $request)
     {
         $query = Empleado::with('persona');
-
-        // Filtro de búsqueda
         if ($request->filled('search')) {
             $search = $request->input('search');
             $query->whereHas('persona', function ($q) use ($search) {
@@ -21,8 +19,6 @@ class EmpleadoController extends Controller
                   ->orWhere('apellido', 'like', "%$search%");
             });
         }
-
-        // Paginación a 7 filas por página
         $empleados = $query->paginate(7);
 
         return view('empleados.index', compact('empleados'));
@@ -44,16 +40,14 @@ class EmpleadoController extends Controller
             'fechaContratacion' => 'required|date|before_or_equal:today|after_or_equal:' . Carbon::now()->subYears(50)->format('Y-m-d'),
         ]);
 
-        // Crear Persona
         $persona = Persona::create([
             'nombre' => $request->nombre,
             'apellido' => $request->apellido,
         ]);
 
-        // Crear Empleado y asignar el id de la persona
         Empleado::create([
             'correoElectronico' => $request->correoElectronico,
-            'password' => bcrypt($request->password), // Encriptar contraseña
+            'password' => bcrypt($request->password), 
             'puesto' => $request->puesto,
             'fechaContratacion' => $request->fechaContratacion,
             'idPersona' => $persona->idPersona,
@@ -64,7 +58,7 @@ class EmpleadoController extends Controller
 
     public function edit($id)
     {
-        $empleado = Empleado::with('persona')->findOrFail($id); // Obtener empleado con datos de persona
+        $empleado = Empleado::with('persona')->findOrFail($id); 
         return view('empleados.edit', compact('empleado'));
     }
 
@@ -96,7 +90,7 @@ class EmpleadoController extends Controller
         if ($request->filled('password')) {
             $data['password'] = bcrypt($request->password);
         }
-    
+        
         $empleado->update($data);
     
         return redirect()->route('empleados.index')->with('success', 'Empleado actualizado correctamente.');
@@ -107,7 +101,6 @@ class EmpleadoController extends Controller
     {
         $empleado = Empleado::findOrFail($id);
         $persona = Persona::findOrFail($empleado->idPersona);
-
         $empleado->delete();
         $persona->delete();
 

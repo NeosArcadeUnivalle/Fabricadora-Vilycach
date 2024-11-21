@@ -9,12 +9,9 @@ class Venta extends Model
 {
     use HasFactory;
 
-    // Desactivar timestamps
     public $timestamps = false;
-
     protected $table = 'ventas';
     protected $primaryKey = 'idVenta';
-    
     protected $fillable = [
         'idCliente', 
         'idLugarVenta', 
@@ -24,7 +21,7 @@ class Venta extends Model
         'total', 
         'tipoLadrillo', 
         'fecha',
-        'estado' // Nueva columna para el estado
+        'estado' 
     ];
 
     public function cliente()

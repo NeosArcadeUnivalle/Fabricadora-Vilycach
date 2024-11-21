@@ -7,9 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MateriaPrima extends Model
 {
-    // Desactivamos timestamps porque la tabla no los tiene
     public $timestamps = false;
-
     protected $table = 'materiaprima';
     protected $primaryKey = 'idMaterial';
 

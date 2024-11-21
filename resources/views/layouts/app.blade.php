@@ -12,12 +12,9 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
-    <!-- Contenedor para el navbar con Vue -->
     <div id="navbar-app">
         <Navbar></Navbar>
     </div>
-
-    <!-- Contenedor principal donde se monta el contenido de la página -->
     <div id="app">
         @yield('content')
     </div>

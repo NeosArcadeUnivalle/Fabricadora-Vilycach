@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Hash;
 
 class EmpleadoAuthController extends Controller
 {
-    // Mostrar el formulario de inicio de sesión
     public function showLoginForm()
     {
         return view('auth.empleado-login');
@@ -17,7 +16,6 @@ class EmpleadoAuthController extends Controller
 
     public function login(Request $request)
     {
-        // Validar los campos del formulario
         $request->validate([
             'correoElectronico' => 'required|email',
             'password' => 'required|min:6',
@@ -37,8 +35,6 @@ class EmpleadoAuthController extends Controller
         ]], 422);
     }
     
-
-    // Cerrar sesión
     public function logout(Request $request)
     {
         Auth::logout();
