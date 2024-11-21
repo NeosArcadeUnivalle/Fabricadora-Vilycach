@@ -30,7 +30,7 @@ class VentaController extends Controller
         if (!is_array($notificaciones)) {
             $notificaciones = [];
         }
-        
+
         array_unshift($notificaciones, $notificacion);
     
         if (count($notificaciones) > 20) {
@@ -186,42 +186,17 @@ class VentaController extends Controller
     public function updateEstado($id)
     {
         $venta = Venta::findOrFail($id);
-        $productoId = $venta->idProducto;
-        $cantidadRestante = $venta->total;
-    
-        // FIFO
-        $lotes = \DB::table('productos')
-            ->join('materiaprima', 'productos.idProducto', '=', 'materiaprima.idMaterial')
-            ->where('productos.idProducto', $productoId)
-            ->orderBy('materiaprima.fechaUltimaCompra', 'asc') // ORDENAR
-            ->select('productos.idProducto', 'productos.cantidadDisponible', 'materiaprima.fechaUltimaCompra')
-            ->get();
-
-        foreach ($lotes as $lote) {
-            if ($cantidadRestante <= 0) {
-                break;
-            }
-            if ($lote->cantidadDisponible >= $cantidadRestante) {
-                \DB::table('productos')
-                    ->where('idProducto', $lote->idProducto)
-                    ->update(['cantidadDisponible' => $lote->cantidadDisponible - $cantidadRestante]);
-                $cantidadRestante = 0;
-            } else {
-                $cantidadRestante -= $lote->cantidadDisponible;
-                \DB::table('productos')
-                    ->where('idProducto', $lote->idProducto)
-                    ->update(['cantidadDisponible' => 0]);
-            }
-        }
-        if ($cantidadRestante > 0) {
+        $producto = Producto::findOrFail($venta->idProducto);
+        if ($producto->cantidadDisponible < $venta->total) {
             return redirect()->route('ventas.index')->withErrors(['error' => 'No hay suficiente stock para completar esta venta.']);
         }
         $venta->estado = 'Completado';
+        $producto->cantidadDisponible -= $venta->total;
+        $producto->save();
         $venta->save();
-    
+
         return redirect()->route('ventas.index')->with('success', 'Venta completada correctamente.');
     }
-    
 
     public function destroy($id)
     {
