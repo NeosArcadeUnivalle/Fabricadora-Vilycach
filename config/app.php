@@ -78,11 +78,33 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', 'en'),
+    'locale' => 'es', // Cambia esto a 'es' para español.
 
-    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
+    /*
+    |--------------------------------------------------------------------------
+    | Application Fallback Locale
+    |--------------------------------------------------------------------------
+    |
+    | The fallback locale determines the locale to use when the current one
+    | is not available. You may change the value to correspond to any of
+    | the language folders that are provided through your application.
+    |
+    */
 
-    'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
+    'fallback_locale' => 'es', // Cambia esto a 'es' o déjalo como 'en' si prefieres inglés como respaldo.
+
+    /*
+    |--------------------------------------------------------------------------
+    | Faker Locale
+    |--------------------------------------------------------------------------
+    |
+    | This locale will be used by the Faker PHP library when generating fake
+    | data for your database seeds. For example, this will be used to get
+    | localized telephone numbers, street addresses, and more.
+    |
+    */
+
+    'faker_locale' => 'es_ES', // Cambia esto para que Faker use datos en español.
 
     /*
     |--------------------------------------------------------------------------
