@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Venta;
 use App\Models\Producto;
+use App\Models\Produccion;
 use App\Models\Cliente;
 use App\Models\Persona;
 use App\Models\LugarDeVenta;
@@ -91,25 +92,35 @@ class VentaController extends Controller
             'direccion' => 'required|string|max:255',
             'ciudad' => 'required|string|max:100',
         ]);
+    
+        $producto = Producto::findOrFail($request->input('producto'));
+        $cantidad = $request->input('cantidad');
+
+        if ($producto->cantidadDisponible < $cantidad) {
+            return redirect()->back()->with('error', 'Stock insuficiente para el producto seleccionado, vuelva a intentarlo en unos días por favor.');
+        }
+
         $persona = Persona::firstOrCreate([
             'nombre' => $request->input('nombre'),
             'apellido' => $request->input('apellido')
         ]);
+    
         $cliente = Cliente::firstOrCreate([
             'idPersona' => $persona->idPersona
         ], [
-            'empresa' => $request->input('empresa', 'Ninguna'),  
+            'empresa' => $request->input('empresa', 'Ninguna'),
             'telefono' => $request->input('telefono')
         ]);
+    
         $lugarVenta = LugarDeVenta::create([
             'nombreLugarVenta' => $request->input('nombreLugarVenta'),
             'direccion' => $request->input('direccion'),
             'ciudad' => $request->input('ciudad')
         ]);
-        $producto = Producto::findOrFail($request->input('producto'));
-        $cantidad = $request->input('cantidad');
+    
         $precioUnitario = $producto->precio;
-        $precioTotal = $cantidad * $precioUnitario; 
+        $precioTotal = $cantidad * $precioUnitario;
+    
         $venta = Venta::create([
             'idCliente' => $cliente->idCliente,
             'idLugarVenta' => $lugarVenta->idLugarVenta,
@@ -120,14 +131,15 @@ class VentaController extends Controller
             'tipoLadrillo' => $producto->tipoLadrillo->tipoLadrillo,
             'fecha' => Carbon::now(),
             'estado' => 'En espera',
-        ]);        
+        ]);
         $this->registrarNotificacion($cliente, $producto, $cantidad);
+    
         if ($venta) {
-            return redirect()->back()->with('success', 'Compra registrada exitosamente, espera a que un encargado se comunique con usted.');
+            return redirect()->back()->with('success', 'Compra registrada exitosamente, espere a que un encargado se comunique con usted.');
         } else {
             return redirect()->back()->with('error', 'Hubo un problema al registrar la venta.');
         }
-    }
+    }    
 
     public function index(Request $request)
     {
@@ -187,16 +199,35 @@ class VentaController extends Controller
     {
         $venta = Venta::findOrFail($id);
         $producto = Producto::findOrFail($venta->idProducto);
-        if ($producto->cantidadDisponible < $venta->total) {
+        $cantidadNecesaria = $venta->total; 
+        if ($producto->cantidadDisponible < $cantidadNecesaria) {
             return redirect()->route('ventas.index')->withErrors(['error' => 'No hay suficiente stock para completar esta venta.']);
         }
-        $venta->estado = 'Completado';
+        $stockFIFO = Produccion::where('idProducto', $producto->idProducto)
+            ->orderBy('fecha', 'asc')
+            ->get();
+    
+        foreach ($stockFIFO as $entrada) {
+            if ($cantidadNecesaria <= 0) {
+                break;
+            }
+            if ($entrada->cantidadProducida >= $cantidadNecesaria) {
+                $entrada->cantidadProducida -= $cantidadNecesaria;
+                $cantidadNecesaria = 0;
+            } else {
+                $cantidadNecesaria -= $entrada->cantidadProducida;
+                $entrada->cantidadProducida = 0;
+            }
+    
+            $entrada->save();
+        }
         $producto->cantidadDisponible -= $venta->total;
         $producto->save();
+        $venta->estado = 'Completado';
         $venta->save();
-
+    
         return redirect()->route('ventas.index')->with('success', 'Venta completada correctamente.');
-    }
+    }    
 
     public function destroy($id)
     {
